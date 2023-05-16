@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start:dev": "nodemon app.ts",
-    "start:prod": "tsc&&node ./builds/app.js"
+    "init:prod": "npm i&&npx prisma migrate deploy&&tsc",
+    "start:prod": "node ./builds/app.js"
   },
   "author": "tummyfit",
   "license": "ISC",
