@@ -6,11 +6,6 @@ import userRouter from "./routes/UserRoute";
 const app = express();
 
 app.use(express.json());
-app.get("/", (req, res) => {
-  res.json({
-    status: "success",
-  });
-});
 
 app.use("/api/v1", userRouter);
 
