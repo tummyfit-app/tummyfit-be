@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import AppError from "../utils/AppError";
 
-function midlewareError(
+function middlewareError(
   error: AppError,
   req: Request,
   res: Response,
@@ -14,4 +14,4 @@ function midlewareError(
   });
 }
 
-export default midlewareError;
+export default middlewareError;

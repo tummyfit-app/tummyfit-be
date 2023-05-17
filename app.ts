@@ -1,6 +1,6 @@
 import express, { Application } from "express";
 import { Controller } from "./interfaces/Controller";
-import midlewareError from "./middlewares/ErrorMiddleware";
+import middlewareError from "./middlewares/ErrorMiddleware";
 
 class AppStarter {
   private express: Application;
@@ -10,7 +10,7 @@ class AppStarter {
     this.port = port;
     this.initMiddleware();
     this.initControllers(controllers);
-    this.express.use(midlewareError);
+    this.express.use(middlewareError);
   }
 
   private initMiddleware() {
