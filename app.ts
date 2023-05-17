@@ -1,15 +1,30 @@
-import express from "express";
-import dotenv from "dotenv";
-dotenv.config();
-import userRouter from "./routes/UserRoute";
+import express, { Application } from "express";
+import { Controller } from "./interfaces/Controller";
 
-const app = express();
+class AppStarter {
+  private express: Application;
+  private port: string;
+  constructor(private controllers: Controller[], port: string) {
+    this.express = express();
+    this.port = port;
+    this.initMiddleware();
+    this.initControllers(controllers);
+  }
 
-app.use(express.json());
+  private initMiddleware() {
+    this.express.use(express.json());
+  }
 
-app.use("/api/v1", userRouter);
+  private initControllers(controllers: Controller[]) {
+    controllers.forEach((controller: Controller) => {
+      this.express.use("/api", controller.router);
+    });
+  }
 
-const PORT: string = process.env.PORT || "3000";
-app.listen(PORT, () => {
-  console.log(`Server is listening to PORT ${process.env.PORT}`);
-});
+  public listenServer() {
+    this.express.listen(this.port, () => {
+      console.log("Server is is listening to port " + this.port);
+    });
+  }
+}
+export default AppStarter;

@@ -1,7 +1,5 @@
 import { PrismaClient } from "@prisma/client";
 
-export class Database {
-  static GetConnection() {
-    return new PrismaClient();
-  }
-}
+const prisma = new PrismaClient();
+
+export default prisma;
