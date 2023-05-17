@@ -1,6 +1,7 @@
-import express, { Application } from "express";
+import express, { Application, NextFunction, Request, Response } from "express";
 import { Controller } from "./interfaces/Controller";
 import middlewareError from "./middlewares/ErrorMiddleware";
+import AppError from "./utils/AppError";
 
 class AppStarter {
   private express: Application;
@@ -10,6 +11,14 @@ class AppStarter {
     this.port = port;
     this.initMiddleware();
     this.initControllers(controllers);
+    this.express.all(
+      "*",
+      (req: Request, response: Response, next: NextFunction) => {
+        next(
+          new AppError(`cant find ${req.originalUrl} on this server`, "404")
+        );
+      }
+    );
     this.express.use(middlewareError);
   }
 
