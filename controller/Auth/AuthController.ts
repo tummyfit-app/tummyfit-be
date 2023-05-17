@@ -18,7 +18,7 @@ class AuthController implements Controller, IAuthController {
   }
 
   async initialRouting() {
-    this.router.get(`${this.path}/login`, this.findAll.bind(this));
+    this.router.post(`${this.path}/login`, wrapAsync(this.findAll.bind(this)));
     this.router.post(
       `${this.path}/register`,
       wrapAsync(this.register.bind(this))
@@ -38,7 +38,7 @@ class AuthController implements Controller, IAuthController {
       return next(new AppError(error.message, "400"));
     }
 
-    const result = await this.authService.insertOne(value);
+    const result: AuthEntity = await this.authService.insertOne(value);
 
     return response.json({
       status: "success",
@@ -48,21 +48,13 @@ class AuthController implements Controller, IAuthController {
   }
 
   async findAll(req: Request, response: Response): Promise<Response> {
-    try {
-      const result: AuthEntity[] = await this.authService.findAll();
+    const result = await this.authService.findOne(req.body["username"]);
 
-      return response.json({
-        status: "Success",
-        data: {
-          user: result,
-        },
-      });
-    } catch (err) {
-      return response.json({
-        status: "failed",
-        message: err,
-      });
-    }
+    return response.json({
+      status: "success",
+      statusCode: "200 OK",
+      token: "example",
+    });
   }
 }
 

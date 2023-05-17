@@ -3,7 +3,7 @@ import { AuthEntity } from "../../entities/AuthEntity";
 import { IAuth } from "./IAuthService";
 import prisma from "../../config/DatabaseConnection";
 import AuthDTO from "../../interfaces/AuthDTO";
-import hashPassword from "../../utils/Bcrypt";
+import { hashPassword, comparePassword } from "../../utils/Bcrypt";
 
 class AuthService implements IAuth {
   private prisma: PrismaClient;
@@ -23,6 +23,14 @@ class AuthService implements IAuth {
 
   public async findAll(): Promise<AuthEntity[]> {
     return this.prisma.user.findMany();
+  }
+
+  public async findOne(username: string): Promise<AuthEntity | null> {
+    return this.prisma.user.findFirst({
+      where: {
+        username: username,
+      },
+    });
   }
 }
 
