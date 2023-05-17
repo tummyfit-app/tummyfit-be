@@ -1,11 +1,13 @@
-import { Request, Response, Router } from "express";
+import { NextFunction, Request, Response, Router } from "express";
 import { Controller } from "../../interfaces/Controller";
 import { AuthEntity } from "../../entities/AuthEntity";
 import { IAuth } from "../../services/Auth/IAuthService";
 import { IAuthController } from "./IAController";
-import authSchema from "../../utils/AuthLoginDTO";
+import authSchema from "../../utils/AuthSchema";
 import { ValidationResult } from "joi";
 import AuthDTO from "../../interfaces/AuthDTO";
+import AppError from "../../utils/AppError";
+import wrapAsync from "../../utils/CatchAsync";
 
 class AuthController implements Controller, IAuthController {
   router: Router = Router();
@@ -17,16 +19,31 @@ class AuthController implements Controller, IAuthController {
 
   async initialRouting() {
     this.router.get(`${this.path}/login`, this.findAll.bind(this));
-    this.router.post(`${this.path}/register`, this.register.bind(this));
+    this.router.post(
+      `${this.path}/register`,
+      wrapAsync(this.register.bind(this))
+    );
   }
 
-  register(req: Request, response: Response): Response {
-    const { value, error }: ValidationResult<AuthDTO> | undefined =
-      authSchema.validate(req.body);
+  async register(
+    req: Request,
+    response: Response,
+    next: NextFunction
+  ): Promise<Response | void> {
+    const { value, error }: ValidationResult<AuthDTO> = authSchema.validate(
+      req.body
+    );
+
+    if (error != undefined) {
+      return next(new AppError(error.message, "400"));
+    }
+
+    const result = await this.authService.insertOne(value);
 
     return response.json({
       status: "success",
-      data: value,
+      statusCode: "201 Created",
+      data: result,
     });
   }
 
