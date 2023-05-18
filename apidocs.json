@@ -11,7 +11,11 @@
   "servers": [
     {
       "url": "https://express-ts-production-f6c5.up.railway.app/",
-      "description": "Example server"
+      "description": "Deployment-1"
+    },
+    {
+      "url": "http://localhost:5000",
+      "description": "Local"
     }
   ],
   "tags": [
@@ -39,8 +43,11 @@
           }
         },
         "responses": {
-          "200": {
-            "description": "test"
+          "201": {
+            "description": "Response sukses ketika semua validasi payload terkonfirmasi dan berhasil membuat user baru.  "
+          },
+          "400": {
+            "description": "Terdapat kesalahan pada payload yang dimasukan, pastikan bahwa kamu sudah memasukan payload dengan benar."
           }
         }
       }
