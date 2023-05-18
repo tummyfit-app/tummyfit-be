@@ -7,6 +7,8 @@ function middlewareError(
   res: Response,
   next: NextFunction
 ): void {
+  const codeStatus = error.statusCode || "500";
+
   res.status(Number(error.statusCode)).json({
     status: "failed",
     statusCode: error.statusCode,

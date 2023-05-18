@@ -8,5 +8,6 @@ export function hashPassword(plainPassword: string): string {
 
 export function comparePassword(plainPassword: string, hash: string): boolean {
   const result: boolean = bcrypt.compareSync(plainPassword, hash);
+
   return result;
 }
