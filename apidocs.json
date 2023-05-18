@@ -1,7 +1,67 @@
 {
   "openapi": "3.0.3",
   "info": {
-    "title": "tummyfit Documentation - Version 1.0.0",
-    "description": "Halaman ini merupakan dokumentasi dari Endpoint yang dimiliki oleh Tummyfit Application."
+    "title": "Tummyfit Documentation ",
+    "version": "1.0.0",
+    "description": "**Tummyfit** merupakan sebuah applikasi berbasis mobile yang berfokus untuk membantu para pengguna merancang diet serta mengatur pola hidup yang lebih sehat. Aplikasi ini didirakan sebagai rancangan dasar untuk Capstone [Bangkit Academy 2023 By Google, GoTo, Traveloka](https://grow.google/intl/id_id/bangkit/) . Team pada Tummyfit ini beranggotakan 6 Orang yaitu: <br> <br> **1. Nashuha Insani(ML) <br> 2. Salman Yusuf(CC) <br> 3. Muhammad Rafly Afrizal Pratama(CC) <br> 4. Adib Fahri Kafabih(MD) <br> 5. Ridho Gymnastiar Al Rasyid(MD) <br> 6. Ainun Syafna Maharani(ML)** ",
+    "contact": {
+      "email": "c375dsx0630@bangkit.academy"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://express-ts-production-f6c5.up.railway.app/",
+      "description": "Example server"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Auth",
+      "description": "Endpoint mengenai Autentifikasi(Login & Register)"
+    }
+  ],
+  "paths": {
+    "/api/auth/register": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "Melakukan Registrasi User",
+        "description": "Endpoint ini ditujukan untuk melakukan registrasi user dengan memasukan payload berupa: **[Email, Username, Password]**",
+        "operationId": "addUser",
+        "requestBody": {
+          "description": "Payload **wajib** berisikan **Email, Username, Password**. Lihat contoh value dibawah ini: ",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserRegister"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "test"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "UserRegister": {
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        }
+      }
+    }
   }
 }
