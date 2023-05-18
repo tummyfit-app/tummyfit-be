@@ -66,6 +66,8 @@ class AuthController implements Controller, IAuthController {
     if (!result)
       //result cannot be found
       return next(new AppError("invalid username or password", "400"));
+
+    //comparing plain-text password with hashedPassword
     if (!comparePassword(value.password, result.password)) {
       return next(new AppError("invalid username or password", "400"));
     }

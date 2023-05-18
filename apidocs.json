@@ -1,0 +1,7 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "tummyfit Documentation - Version 1.0.0",
+    "description": "Halaman ini merupakan dokumentasi dari Endpoint yang dimiliki oleh Tummyfit Application."
+  }
+}

@@ -2,6 +2,8 @@ import express, { Application, NextFunction, Request, Response } from "express";
 import { Controller } from "./interfaces/Controller";
 import middlewareError from "./middlewares/ErrorMiddleware";
 import AppError from "./utils/AppError";
+import swaggerUI from "swagger-ui-express";
+import * as swaggerDoc from "./apidocs.json";
 
 class AppStarter {
   private express: Application;
@@ -24,6 +26,7 @@ class AppStarter {
 
   private initMiddleware() {
     this.express.use(express.json());
+    this.express.use("/api-docs", swaggerUI.serve, swaggerUI.setup(swaggerDoc));
   }
 
   private initControllers(controllers: Controller[]) {
