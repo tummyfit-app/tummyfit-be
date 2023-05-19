@@ -3,7 +3,7 @@
   "info": {
     "title": "Tummyfit Documentation ",
     "version": "1.0.0",
-    "description": "**Tummyfit** merupakan sebuah applikasi berbasis mobile yang berfokus untuk membantu para pengguna merancang diet serta mengatur pola hidup yang lebih sehat. Aplikasi ini didirakan sebagai rancangan dasar untuk Capstone [Bangkit Academy 2023 By Google, GoTo, Traveloka](https://grow.google/intl/id_id/bangkit/) . Team pada Tummyfit ini beranggotakan 6 Orang yaitu: <br> <br> **1. Nashuha Insani(ML) <br> 2. Salman Yusuf(CC) <br> 3. Muhammad Rafly Afrizal Pratama(CC) <br> 4. Adib Fahri Kafabih(MD) <br> 5. Ridho Gymnastiar Al Rasyid(MD) <br> 6. Ainun Syafna Maharani(ML)** ",
+    "description": "**Tummyfit** merupakan sebuah applikasi berbasis mobile yang berfokus untuk membantu para pengguna merancang diet serta mengatur pola hidup yang lebih sehat. Aplikasi ini didirakan sebagai rancangan dasar untuk Capstone [Bangkit Academy 2023 By Google, GoTo, Traveloka](https://grow.google/intl/id_id/bangkit/) . Team pada Tummyfit ini beranggotakan 6 orang yaitu: <br> <br> **1. Nashuha Insani(ML) <br> 2. Salman Yusuf(CC) <br> 3. Muhammad Rafly Afrizal Pratama(CC) <br> 4. Adib Fahri Kafabih(MD) <br> 5. Ridho Gymnastiar Al Rasyid(MD) <br> 6. Ainun Syafna Maharani(ML)** ",
     "contact": {
       "email": "c375dsx0630@bangkit.academy"
     }
@@ -29,7 +29,7 @@
       "post": {
         "tags": ["Auth"],
         "summary": "Melakukan Registrasi User",
-        "description": "Endpoint ini ditujukan untuk melakukan registrasi user dengan memasukan payload berupa: **[Email, Username, Password]**",
+        "description": "Endpoint ini ditujukan untuk melakukan registrasi user dengan memasukan payload berupa: **[Email, Username, Password]**. Tentu saja password yang dimasukan tidak langsung dikembalikan, melainkan server melakukan enkripsi terlebih dahulu, agar password aman.",
         "operationId": "addUser",
         "requestBody": {
           "description": "Payload **wajib** berisikan **Email, Username, Password**. Lihat contoh value dibawah ini: ",
@@ -51,8 +51,39 @@
           }
         }
       }
+    },
+    "/api/auth/login": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "Melakukan login user",
+        "description": "User yang telah melakukan registrasi, dapat melakukan login pada endpoint ini, dan akan mengambalikan sebuah **token**",
+        "operationId": "loginUser",
+        "requestBody": {
+          "description": "User harus memasukan payload berupa **username** dan **password** yang telah didaftarkan sebelumnya",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserLogin"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "**Response Sukses**.<br> Kondisi ini terjadi ketika user berhasil memasukan username dan password yang sesuai, sehingga server akan mengambalikan sebuah **token** untuk autentifikasi"
+          },
+          "400": {
+            "description": "**Response Gagal**.<br> Terdapat kesalahan pada payload yang dimasukan oleh user, seperti username atau password yang salah."
+          },
+          "500": {
+            "description": "**Internal Server Error**.<br> Terjadi kesalahan pada server, sehingga client atau user tidak bisa mengakses endpoint atau url milik tummyfit"
+          }
+        }
+      }
     }
   },
+
   "components": {
     "schemas": {
       "UserRegister": {
@@ -62,6 +93,18 @@
             "type": "string"
           },
           "email": {
+            "type": "string",
+            "example": "string@gmail.com"
+          },
+          "password": {
+            "type": "string"
+          }
+        }
+      },
+      "UserLogin": {
+        "type": "object",
+        "properties": {
+          "username": {
             "type": "string"
           },
           "password": {

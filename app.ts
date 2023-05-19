@@ -9,9 +9,13 @@ import cors from "cors";
 class AppStarter {
   private express: Application;
   private port: string;
+  private options: object;
   constructor(private controllers: Controller[], port: string) {
     this.express = express();
     this.port = port;
+    this.options = {
+      customSiteTitle: "Tummyfit",
+    };
     this.initMiddleware();
     this.initControllers(controllers);
     this.express.all(
@@ -28,7 +32,11 @@ class AppStarter {
   private initMiddleware() {
     this.express.use(cors());
     this.express.use(express.json());
-    this.express.use("/api-docs", swaggerUI.serve, swaggerUI.setup(swaggerDoc));
+    this.express.use(
+      "/api-docs",
+      swaggerUI.serve,
+      swaggerUI.setup(swaggerDoc, this.options)
+    );
   }
 
   private initControllers(controllers: Controller[]) {
