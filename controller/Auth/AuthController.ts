@@ -47,7 +47,7 @@ class AuthController implements Controller, IAuthController {
       status: "success",
       statusCode: "201 Created",
       data: result,
-      message: "New user has been created",
+      message: "New user has been successfully registered.",
     });
   }
 
@@ -89,7 +89,7 @@ class AuthController implements Controller, IAuthController {
       status: "success",
       statusCode: "200 OK",
       token,
-      message: "username and password is valid.",
+      message: "Login success",
     });
   }
 }
