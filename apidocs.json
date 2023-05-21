@@ -29,10 +29,10 @@
       "post": {
         "tags": ["Auth"],
         "summary": "Melakukan Registrasi User",
-        "description": "Endpoint ini ditujukan untuk melakukan registrasi user dengan memasukan payload berupa: **[Email, Username, Password]**. Tentu saja password yang dimasukan tidak langsung dikembalikan, melainkan server melakukan enkripsi terlebih dahulu, agar password aman.",
+        "description": "Endpoint ini ditujukan untuk melakukan registrasi user dengan memasukan payload berupa: **[Email, Username, Password, Namauser]**. Tentu saja password yang dimasukan tidak langsung dikembalikan, melainkan server melakukan enkripsi terlebih dahulu, agar password aman.",
         "operationId": "addUser",
         "requestBody": {
-          "description": "Payload **wajib** berisikan **Email, Username, Password**. Lihat contoh value dibawah ini: ",
+          "description": "Payload **wajib** berisikan **Email, Username, Password, dan Namauser**. Lihat contoh value dibawah ini: ",
           "required": true,
           "content": {
             "application/json": {
