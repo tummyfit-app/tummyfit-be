@@ -3,7 +3,7 @@ import { AuthEntity } from "../../entities/AuthEntity";
 import { IAuth } from "./IAuthService";
 
 import AuthDTO from "../../interfaces/AuthDTO";
-import { hashPassword, comparePassword } from "../../utils/Bcrypt";
+import { hashPassword } from "../../utils/Bcrypt";
 
 class AuthService implements IAuth {
   private prisma: PrismaClient;
@@ -17,12 +17,14 @@ class AuthService implements IAuth {
         username: body.username,
         email: body.email,
         password: body.password,
+        namauser: body.namauser,
       },
       select: {
         id: true,
         username: true,
         password: true,
         email: true,
+        namauser: true,
       },
     });
   }
@@ -37,6 +39,7 @@ class AuthService implements IAuth {
         username: true,
         password: true,
         id: true,
+        namauser: true,
       },
     });
   }

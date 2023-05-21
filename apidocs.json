@@ -92,6 +92,9 @@
           "username": {
             "type": "string"
           },
+          "namauser": {
+            "type": "string"
+          },
           "email": {
             "type": "string",
             "example": "string@gmail.com"
