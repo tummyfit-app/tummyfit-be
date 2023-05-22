@@ -1,7 +1,7 @@
 import { AuthEntity } from "./AuthEntity";
 
 interface UserEntity {
-  id: string;
+  id?: string;
   age: number;
   height: number;
   weight: number;
