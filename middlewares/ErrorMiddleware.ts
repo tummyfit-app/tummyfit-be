@@ -1,5 +1,20 @@
 import { NextFunction, Request, Response } from "express";
 import AppError from "../utils/AppError";
+import { Err } from "joi";
+
+const ErrorValidation = (error: AppError, response: Response) => {
+  const message: string = `${error.meta.target} sudah terpakai, silahkan coba yang lain`;
+  response.status(400).json({
+    status: "400",
+    message: message,
+  });
+};
+
+export interface CustomError {
+  code: string;
+  statusCode?: string;
+  message?: string;
+}
 
 function middlewareError(
   error: AppError,
@@ -9,11 +24,15 @@ function middlewareError(
 ): void {
   const codeStatus = error.statusCode || "500";
 
-  res.status(Number(error.statusCode)).json({
-    status: "failed",
-    statusCode: error.statusCode,
-    message: error.message,
-  });
+  if (error.code === "P2002") {
+    ErrorValidation(error, res);
+  } else {
+    res.status(Number(codeStatus)).json({
+      status: "failed",
+      statusCode: codeStatus,
+      message: error.message,
+    });
+  }
 }
 
 export default middlewareError;

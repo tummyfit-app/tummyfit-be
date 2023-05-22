@@ -2,12 +2,13 @@ import { NextFunction, Request, Response } from "express";
 import AppError from "../utils/AppError";
 import jwt, { JwtPayload } from "jsonwebtoken";
 import { DecodedEntity } from "../entities/DecodedEntity";
+import prisma from "../config/DatabaseConnection";
 
 export interface CustomRequest extends Request {
   user: DecodedEntity;
 }
 
-function authorizationMiddleware(
+async function authorizationMiddleware(
   req: Request,
   response: Response,
   next: NextFunction
@@ -28,6 +29,15 @@ function authorizationMiddleware(
     const decoded = jwt.verify(header, secretKey) as DecodedEntity;
 
     (req as CustomRequest).user = decoded;
+
+    const result = await prisma.user.findFirst({
+      where: {
+        id: decoded.id,
+      },
+    });
+    if (!result) {
+      return next(new AppError("Data is not valid", "404"));
+    }
 
     next();
   } catch (error: any) {

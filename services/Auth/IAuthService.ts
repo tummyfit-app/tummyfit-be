@@ -3,5 +3,5 @@ import AuthDTO from "../../interfaces/AuthDTO";
 
 export interface IAuth {
   findOne(username: string): Promise<AuthEntity | null>;
-  insertOne(body: AuthDTO | undefined): Promise<AuthEntity>;
+  insertOne(body: AuthDTO | undefined): Promise<AuthEntity | string>;
 }

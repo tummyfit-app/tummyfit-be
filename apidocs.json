@@ -14,7 +14,7 @@
       "description": "Deployment-1"
     },
     {
-      "url": "http://localhost:5000",
+      "url": "https://localhost:5000",
       "description": "Local"
     }
   ],
@@ -22,6 +22,10 @@
     {
       "name": "Auth",
       "description": "Endpoint mengenai Autentifikasi(Login & Register)"
+    },
+    {
+      "name": "User",
+      "description": "Endpoint mengenai user dan user description"
     }
   ],
   "paths": {
@@ -78,6 +82,19 @@
           },
           "500": {
             "description": "**Internal Server Error**.<br> Terjadi kesalahan pada server, sehingga client atau user tidak bisa mengakses endpoint atau url milik tummyfit"
+          }
+        }
+      }
+    },
+    "api/v1/users": {
+      "get": {
+        "tags": ["User"],
+        "summary": "Mendapatkan spesifik data user & deskripsi miliknya",
+        "description": "Endpoint ini bertujuan untuk mendapatkan hasil user description yang spesifik. User tersebut sudah harus melakukan login terlebih dahulu sehingga memiliki token yang sesuai dengan yang di mau.",
+        "operationId": "getUserDesc",
+        "responses": {
+          "200": {
+            "description": "**Response SUkses**. <br> Berhasil mendapatkan data user tertentu serta deskripsi nya "
           }
         }
       }
