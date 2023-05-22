@@ -5,7 +5,8 @@ import { Err } from "joi";
 const ErrorValidation = (error: AppError, response: Response) => {
   const message: string = `${error.meta.target} sudah terpakai, silahkan coba yang lain`;
   response.status(400).json({
-    status: "400",
+    status: "failed",
+    statusCode: "400",
     message: message,
   });
 };
