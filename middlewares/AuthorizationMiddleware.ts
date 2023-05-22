@@ -13,12 +13,16 @@ async function authorizationMiddleware(
   response: Response,
   next: NextFunction
 ) {
-  const header: string | undefined = req.headers.authorization;
-
-  if (!header) {
-    return next(new AppError("Invalid token provided", "403"));
+  if (!req.headers.authorization) {
+    return next(new AppError("Invalid token provided", "401"));
   }
 
+  const splitToken = req.headers.authorization.split(" ");
+
+  if (splitToken[0] != "Bearer") {
+    return next(new AppError("Invalid Bearer", "401"));
+  }
+  const header: string = splitToken[1];
   const secretKey = process.env.JWT_SECRET_KEY;
 
   if (!secretKey) {
@@ -41,7 +45,7 @@ async function authorizationMiddleware(
 
     next();
   } catch (error: any) {
-    return next(new AppError("Invalid token provided", "403"));
+    return next(new AppError("Invalid token provided", "401"));
   }
 }
 

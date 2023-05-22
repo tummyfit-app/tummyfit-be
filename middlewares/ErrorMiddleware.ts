@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import AppError from "../utils/AppError";
 import { Err } from "joi";
 
-const ErrorValidation = (error: AppError, response: Response) => {
+const PrismaErrorUniqueValidation = (error: AppError, response: Response) => {
   const message: string = `${error.meta.target} sudah terpakai, silahkan coba yang lain`;
   response.status(400).json({
     status: "failed",
@@ -26,7 +26,7 @@ function middlewareError(
   const codeStatus = error.statusCode || "500";
 
   if (error.code === "P2002") {
-    ErrorValidation(error, res);
+    PrismaErrorUniqueValidation(error, res);
   } else {
     res.status(Number(codeStatus)).json({
       status: "failed",

@@ -12,6 +12,7 @@
   "author": "tummyfit",
   "license": "ISC",
   "dependencies": {
+    "@joi/date": "^2.1.0",
     "@prisma/client": "^4.14.0",
     "bcrypt": "^5.1.0",
     "cors": "^2.8.5",

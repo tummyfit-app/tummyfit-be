@@ -22,8 +22,8 @@ model User {
 }
 
 model UserDescription {
-  id             String @id @default(uuid())
-  age            Int
+  id             String   @id @default(uuid())
+  birthDate      DateTime
   height         Int
   weight         Int
   sex            String
@@ -34,6 +34,6 @@ model UserDescription {
   alcohol        String
   daily_activity String
   purpose        String
-  user           User   @relation(fields: [userId], references: [id])
-  userId         String @unique
+  user           User     @relation(fields: [userId], references: [id])
+  userId         String   @unique
 }

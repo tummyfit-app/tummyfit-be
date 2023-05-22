@@ -1,6 +1,8 @@
 import joi, { ObjectSchema } from "joi";
 import AuthDTO from "../interfaces/AuthDTO";
 import { Login } from "../interfaces/LoginDTO";
+import joiDate from "@joi/date";
+const joy = joi.extend(joiDate);
 
 //schema for register.
 export const authSchema: ObjectSchema<AuthDTO> = joi.object().keys({
@@ -17,7 +19,7 @@ export const loginSchema: ObjectSchema<Login> = joi.object().keys({
 
 //harus dilanjutkan
 export const descSchema = joi.object().keys({
-  age: joi.number().integer().required(),
+  birthDate: joi.date().iso().required().raw(),
   height: joi.number().integer().required(),
   weight: joi.number().integer().required(),
   sex: joi.string().required().valid("male", "female"),

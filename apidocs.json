@@ -8,13 +8,14 @@
       "email": "c375dsx0630@bangkit.academy"
     }
   },
+
   "servers": [
     {
-      "url": "https://express-ts-production-f6c5.up.railway.app/",
+      "url": "https://express-ts-production-f6c5.up.railway.app",
       "description": "Deployment-1"
     },
     {
-      "url": "https://localhost:5000",
+      "url": "http://localhost:5000",
       "description": "Local"
     }
   ],
@@ -86,15 +87,55 @@
         }
       }
     },
-    "api/v1/users": {
+    "/api/v1/users": {
       "get": {
         "tags": ["User"],
         "summary": "Mendapatkan spesifik data user & deskripsi miliknya",
         "description": "Endpoint ini bertujuan untuk mendapatkan hasil user description yang spesifik. User tersebut sudah harus melakukan login terlebih dahulu sehingga memiliki token yang sesuai dengan yang di mau.",
         "operationId": "getUserDesc",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "responses": {
           "200": {
-            "description": "**Response SUkses**. <br> Berhasil mendapatkan data user tertentu serta deskripsi nya "
+            "description": "**Response Sukses**. <br> Berhasil mendapatkan data user tertentu serta deskripsi nya "
+          },
+          "401": {
+            "description": "**Response Gagal**. <br> Tidak ada nya token yang ditaruh pada Header, sehingga muncul error ini"
+          }
+        }
+      },
+      "post": {
+        "tags": ["User"],
+        "summary": "Membuat user description untuk spesifik user(user yang telah melakukan authorisasi)",
+        "description": "Endpoint ini digunakan untuk membuat user description, dimana user description yang dimasukan akan menjadi milik user yang telah melakukan autorisasi",
+        "operationId": "insertUserDesc",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserDescription"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "**Response Sukses**. <br> Deskripsi dari user berhasil dibuat."
+          },
+          "400": {
+            "description": "**Response Gagal**. <br> Terjadi kesalahan pada payload yang dimasukan. Pastikan kembali payload yang dimasukan sudah benar"
+          },
+          "401": {
+            "description": "**Response Gagal**. <br> Tidak ada nya autorisasi atau token yang disisipkan."
           }
         }
       }
@@ -102,6 +143,15 @@
   },
 
   "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT",
+        "description": "Silahkan masukan token, **tidak perlu** mengawali nya dengan `Bearer` <br> prefix, e.g. \"abcde12345\"."
+      }
+    },
+
     "schemas": {
       "UserRegister": {
         "type": "object",
@@ -118,6 +168,55 @@
           },
           "password": {
             "type": "string"
+          }
+        }
+      },
+      "UserDescription": {
+        "type": "object",
+        "properties": {
+          "birthDate": {
+            "type": "string",
+            "example": "input date format(YYYY-MM-DD)"
+          },
+          "height": {
+            "type": "number",
+            "example": 170
+          },
+          "weight": {
+            "type": "number",
+            "example": 68
+          },
+          "sex": {
+            "type": "string",
+            "example": "male/female(choose one)"
+          },
+          "gluten_free": {
+            "type": "string",
+            "example": "yes/no(choose one)"
+          },
+          "dairy_free": {
+            "type": "string",
+            "example": "yes/no(choose one)"
+          },
+          "vegan": {
+            "type": "string",
+            "example": "yes/no(choose one)"
+          },
+          "vegetarian": {
+            "type": "string",
+            "example": "yes/no(choose one)"
+          },
+          "alcohol": {
+            "type": "string",
+            "example": "yes/no(choose one)"
+          },
+          "daily_activity": {
+            "type": "string",
+            "example": "working"
+          },
+          "purpose": {
+            "type": "string",
+            "example": "diet"
           }
         }
       },

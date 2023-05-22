@@ -2,6 +2,7 @@ import { Prisma, PrismaClient } from "@prisma/client";
 import UserEntity from "../../entities/UserEntity";
 
 import IUserService from "./IUserService";
+import { date } from "joi";
 
 class UserService implements IUserService {
   private prisma: PrismaClient;
@@ -21,9 +22,17 @@ class UserService implements IUserService {
   }
 
   async insertUser(payload: UserEntity, userId: string): Promise<UserEntity> {
+    const dateString: string = "" + payload.birthDate;
+
+    const dateSplit = dateString.split("-");
+    const year = parseInt(dateSplit[0]);
+    const month = parseInt(dateSplit[1]) - 1;
+    const day = parseInt(dateSplit[2]);
+    const dateTime = new Date(year, month, day);
+    dateTime.setUTCHours(dateTime.getUTCHours() + 7);
     return this.prisma.userDescription.create({
       data: {
-        age: payload.age,
+        birthDate: dateTime,
         height: payload.height,
         weight: payload.weight,
         sex: payload.sex,

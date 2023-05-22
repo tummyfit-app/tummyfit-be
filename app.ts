@@ -16,6 +16,7 @@ class AppStarter {
     this.options = {
       customSiteTitle: "Tummyfit",
     };
+    this.express.disable("x-powered-by");
     this.initMiddleware();
     this.initControllers(controllers);
     this.express.all(
@@ -31,6 +32,7 @@ class AppStarter {
 
   private initMiddleware() {
     this.express.use(cors());
+
     this.express.use(express.json());
     this.express.use(
       "/api-docs",
