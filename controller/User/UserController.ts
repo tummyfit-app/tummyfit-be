@@ -8,6 +8,8 @@ import Joi from "joi";
 import { descSchema } from "../../utils/SchemaValidation";
 import { NextFunction } from "express";
 import AppError from "../../utils/AppError";
+import UserEntity from "../../entities/UserEntity";
+import wrapAsync from "../../utils/CatchAsync";
 
 class UserController implements Controller {
   router: Router = Router();
@@ -21,12 +23,12 @@ class UserController implements Controller {
     this.router.get(
       `${this.path}/`,
       authorizationMiddleware,
-      this.findUser.bind(this)
+      wrapAsync(this.findUser.bind(this))
     );
     this.router.post(
       `${this.path}/`,
       authorizationMiddleware,
-      this.create.bind(this)
+      wrapAsync(this.create.bind(this))
     );
   }
 
@@ -38,7 +40,10 @@ class UserController implements Controller {
       return next(new AppError(error.message, "400"));
     }
 
-    const result = await this.userService.insertUser(value, user.id);
+    const result: UserEntity | string = await this.userService.insertUser(
+      value,
+      user.id
+    );
 
     response.json({
       status: "success",

@@ -21,7 +21,10 @@ class UserService implements IUserService {
     });
   }
 
-  async insertUser(payload: UserEntity, userId: string): Promise<UserEntity> {
+  async insertUser(
+    payload: UserEntity,
+    userId: string
+  ): Promise<UserEntity | string> {
     const dateString: string = "" + payload.birthDate;
 
     const dateSplit = dateString.split("-");
@@ -30,6 +33,7 @@ class UserService implements IUserService {
     const day = parseInt(dateSplit[2]);
     const dateTime = new Date(year, month, day);
     dateTime.setUTCHours(dateTime.getUTCHours() + 7);
+
     return this.prisma.userDescription.create({
       data: {
         birthDate: dateTime,

@@ -37,3 +37,8 @@ model UserDescription {
   user           User     @relation(fields: [userId], references: [id])
   userId         String   @unique
 }
+
+model Foods {
+  id          String @id @default(uuid())
+  instruction String @db.Text
+}

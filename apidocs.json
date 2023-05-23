@@ -2,7 +2,7 @@
   "openapi": "3.0.3",
   "info": {
     "title": "Tummyfit Documentation ",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "description": "**Tummyfit** merupakan sebuah applikasi berbasis mobile yang berfokus untuk membantu para pengguna merancang diet serta mengatur pola hidup yang lebih sehat. Aplikasi ini didirakan sebagai rancangan dasar untuk Capstone [Bangkit Academy 2023 By Google, GoTo, Traveloka](https://grow.google/intl/id_id/bangkit/) . Team pada Tummyfit ini beranggotakan 6 orang yaitu: <br> <br> **1. Nashuha Insani(ML) <br> 2. Salman Yusuf(CC) <br> 3. Muhammad Rafly Afrizal Pratama(CC) <br> 4. Adib Fahri Kafabih(MD) <br> 5. Ridho Gymnastiar Al Rasyid(MD) <br> 6. Ainun Syafna Maharani(ML)** ",
     "contact": {
       "email": "c375dsx0630@bangkit.academy"

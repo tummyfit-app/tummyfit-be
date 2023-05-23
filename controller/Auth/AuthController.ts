@@ -42,7 +42,7 @@ class AuthController implements Controller, IAuthController {
     }
 
     const result: AuthEntity | string = await this.authService.insertOne(value);
-    console.log(result);
+
     return response.json({
       status: "success",
       statusCode: "201 Created",
