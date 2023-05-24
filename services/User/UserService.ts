@@ -1,8 +1,7 @@
-import { Prisma, PrismaClient } from "@prisma/client";
+import { PrismaClient } from "@prisma/client";
 import UserEntity from "../../entities/UserEntity";
 
 import IUserService from "./IUserService";
-import { date } from "joi";
 
 class UserService implements IUserService {
   private prisma: PrismaClient;
@@ -15,8 +14,26 @@ class UserService implements IUserService {
       where: {
         userId: id,
       },
-      include: {
-        user: true,
+
+      select: {
+        birthDate: true,
+        height: true,
+        weight: true,
+        sex: true,
+        gluten_free: true,
+        daily_activity: true,
+        dairy_free: true,
+        vegan: true,
+        vegetarian: true,
+        alcohol: true,
+        purpose: true,
+        userId: true,
+        user: {
+          select: {
+            username: true,
+            email: true,
+          },
+        },
       },
     });
   }
@@ -48,6 +65,27 @@ class UserService implements IUserService {
         daily_activity: payload.daily_activity,
         purpose: payload.purpose,
         userId: userId,
+      },
+      select: {
+        birthDate: true,
+        height: true,
+        weight: true,
+        sex: true,
+        gluten_free: true,
+        daily_activity: true,
+        dairy_free: true,
+        vegan: true,
+        vegetarian: true,
+        alcohol: true,
+        purpose: true,
+        userId: true,
+        user: {
+          select: {
+            username: true,
+            email: true,
+            namauser: true,
+          },
+        },
       },
     });
   }

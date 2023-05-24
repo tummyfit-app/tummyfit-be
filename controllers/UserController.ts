@@ -1,15 +1,15 @@
 import { Request, Response, Router } from "express";
-import { Controller } from "../../interfaces/Controller";
-import IUserService from "../../services/User/IUserService";
+import { Controller } from "../interfaces/Controller";
+import IUserService from "../services/User/IUserService";
 import authorizationMiddleware, {
   CustomRequest,
-} from "../../middlewares/AuthorizationMiddleware";
+} from "../middlewares/AuthorizationMiddleware";
 
-import { descSchema } from "../../utils/SchemaValidation";
+import { descSchema } from "../utils/SchemaValidation";
 import { NextFunction } from "express";
-import AppError from "../../utils/AppError";
-import UserEntity from "../../entities/UserEntity";
-import wrapAsync from "../../utils/CatchAsync";
+import AppError from "../utils/AppError";
+import UserEntity from "../entities/UserEntity";
+import wrapAsync from "../utils/CatchAsync";
 
 class UserController implements Controller {
   router: Router = Router();
@@ -59,11 +59,13 @@ class UserController implements Controller {
     //Harus diubah ID nya berdasarkan inputan user
     const user = (req as CustomRequest).user;
     const result = await this.userService.findUser(user.id);
+
     response.json({
       status: "success",
       data: {
         UserDescription: result,
       },
+      message: "Getting Specific User Description",
     });
   }
 }

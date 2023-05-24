@@ -14,6 +14,6 @@ interface UserEntity {
   daily_activity: string;
   purpose: string;
   userId: string;
-  user?: AuthEntity;
+  user?: any;
 }
 export default UserEntity;

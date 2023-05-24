@@ -1,25 +1,24 @@
 import { NextFunction, Request, Response, Router } from "express";
-import { Controller } from "../../interfaces/Controller";
-import { AuthEntity } from "../../entities/AuthEntity";
-import { IAuth } from "../../services/Auth/IAuthService";
-import { IAuthController } from "./IAController";
+import { Controller } from "../interfaces/Controller";
+import { AuthEntity } from "../entities/AuthEntity";
+import { IAuth } from "../services/Auth/IAuthService";
 import {
   authSchema,
   loginSchema,
   updateUserSchema,
-} from "../../utils/SchemaValidation";
+} from "../utils/SchemaValidation";
 import { ValidationResult } from "joi";
-import AuthDTO from "../../interfaces/AuthDTO";
-import AppError from "../../utils/AppError";
-import wrapAsync from "../../utils/CatchAsync";
+import AuthDTO from "../interfaces/AuthDTO";
+import AppError from "../utils/AppError";
+import wrapAsync from "../utils/CatchAsync";
 import jwt from "jsonwebtoken";
-import { comparePassword } from "../../utils/Bcrypt";
+import { comparePassword } from "../utils/Bcrypt";
 import authorizationMiddleware, {
   CustomRequest,
-} from "../../middlewares/AuthorizationMiddleware";
-import { DecodedEntity } from "../../entities/DecodedEntity";
+} from "../middlewares/AuthorizationMiddleware";
+import { DecodedEntity } from "../entities/DecodedEntity";
 
-class AuthController implements Controller, IAuthController {
+class AuthController implements Controller {
   router: Router = Router();
   path: string = "/auth";
 

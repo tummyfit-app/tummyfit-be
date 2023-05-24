@@ -1,9 +1,9 @@
 import dotenv from "dotenv";
 import AppStarter from "./app";
-import AuthController from "./controller/Auth/AuthController";
+import AuthController from "./controllers/AuthController";
 import prisma from "./config/DatabaseConnection";
 import AuthService from "./services/Auth/AuthService";
-import UserController from "./controller/User/UserController";
+import UserController from "./controllers/UserController";
 import UserService from "./services/User/UserService";
 // import fs from "fs";
 // import csv from "csv-parser";
