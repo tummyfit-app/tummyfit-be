@@ -31,8 +31,17 @@ export const descSchema = joi.object().keys({
   vegan: joi.string().required().valid("yes", "no"),
   vegetarian: joi.string().required().valid("yes", "no"),
   alcohol: joi.string().required().valid("yes", "no"),
-  daily_activity: joi.string().required(),
-  purpose: joi.string().required().valid("diet", "healthy"),
+  daily_activity: joi
+    .string()
+    .required()
+    .valid(
+      "Sedentary",
+      "Lightly active",
+      "Moderately active",
+      "Very active",
+      "Extra active"
+    ),
+  purpose: joi.string().required().valid("Maintain weight", "Weight loss"),
 });
 
 export const updateUserSchema = joi.object().keys({
