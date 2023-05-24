@@ -87,6 +87,41 @@
         }
       }
     },
+    "/api/auth": {
+      "patch": {
+        "tags": ["Auth"],
+        "summary": "Melakukan update data profile user",
+        "description": "Endpoint ini digunakan untuk melakukan melakukan update pada spesifik data profile user. User bebas mengupdate data mana yang mau diubah, seperti username, password, email ataupun nama user",
+        "operationId": "updateUser",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "description": "User boleh memasukan salah satu dari data profile yang ingin diupdate. Pada contoh dibawah, data yang akan diupdate adalah username.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserUpdate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "**Response Sukses**. <br> User berhasil melakukan update pada data"
+          },
+          "204": {
+            "description": "**Response Sukses**. <br> Tidak ada data yang dirubah oleh user"
+          },
+
+          "401": {
+            "description": "**Response Gagal**. <br> Tidak ada nya autorisasi atau token yang disisipkan."
+          }
+        }
+      }
+    },
     "/api/v1/users": {
       "get": {
         "tags": ["User"],
@@ -153,6 +188,15 @@
     },
 
     "schemas": {
+      "UserUpdate": {
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string",
+            "example": "aku_ganteng"
+          }
+        }
+      },
       "UserRegister": {
         "type": "object",
         "properties": {

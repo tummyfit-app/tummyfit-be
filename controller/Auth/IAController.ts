@@ -11,4 +11,10 @@ export interface IAuthController {
     response: Response,
     next: NextFunction
   ): Promise<Response | void>;
+
+  update(
+    req: Request,
+    response: Response,
+    next: NextFunction
+  ): Promise<Response | void>;
 }

@@ -10,6 +10,22 @@ class AuthService implements IAuth {
   constructor(orm: PrismaClient) {
     this.prisma = orm;
   }
+  async update(id: string, body: AuthDTO): Promise<AuthEntity> {
+    if (body.password !== undefined) {
+      body.password = hashPassword(body.password);
+    }
+    return this.prisma.user.update({
+      where: {
+        id,
+      },
+      data: {
+        username: body.username || undefined,
+        email: body.email || undefined,
+        password: body.password || undefined,
+        namauser: body.namauser || undefined,
+      },
+    });
+  }
   async insertOne(body: AuthDTO): Promise<AuthEntity | string> {
     body.password = hashPassword(body.password);
     return this.prisma.user.create({

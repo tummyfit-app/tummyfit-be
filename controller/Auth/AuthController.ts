@@ -3,13 +3,22 @@ import { Controller } from "../../interfaces/Controller";
 import { AuthEntity } from "../../entities/AuthEntity";
 import { IAuth } from "../../services/Auth/IAuthService";
 import { IAuthController } from "./IAController";
-import { authSchema, loginSchema } from "../../utils/SchemaValidation";
+import {
+  authSchema,
+  loginSchema,
+  updateUserSchema,
+} from "../../utils/SchemaValidation";
 import { ValidationResult } from "joi";
 import AuthDTO from "../../interfaces/AuthDTO";
 import AppError from "../../utils/AppError";
 import wrapAsync from "../../utils/CatchAsync";
 import jwt from "jsonwebtoken";
 import { comparePassword } from "../../utils/Bcrypt";
+import authorizationMiddleware, {
+  CustomRequest,
+} from "../../middlewares/AuthorizationMiddleware";
+import { DecodedEntity } from "../../entities/DecodedEntity";
+
 class AuthController implements Controller, IAuthController {
   router: Router = Router();
   path: string = "/auth";
@@ -24,6 +33,36 @@ class AuthController implements Controller, IAuthController {
       `${this.path}/register`,
       wrapAsync(this.register.bind(this))
     );
+    this.router.patch(
+      `${this.path}`,
+      authorizationMiddleware,
+      wrapAsync(this.update.bind(this))
+    );
+  }
+
+  async update(
+    req: Request,
+    response: Response,
+    next: NextFunction
+  ): Promise<void | Response> {
+    const { value, error } = updateUserSchema.validate(req.body);
+    const user: DecodedEntity = (req as CustomRequest).user;
+    if (Object.keys(value).length === 0) {
+      return response.status(204).json({});
+    }
+    if (error) {
+      return next(new AppError(error.message, "400"));
+    }
+
+    await this.authService.update(user.id, value);
+
+    return response.json({
+      status: "success",
+      statusCode: "200",
+      response: {
+        message: `${Object.keys(value)} telah diperbaharui`,
+      },
+    });
   }
 
   async register(
