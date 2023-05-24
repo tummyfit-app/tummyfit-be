@@ -11,7 +11,7 @@ export const authSchema: ObjectSchema<AuthDTO> = joi.object().keys({
   email: joi.string().email().required(),
   namauser: joi
     .string()
-    .pattern(/^[a-zA-Z]+$/)
+    .pattern(/^[a-zA-Z ]*$/)
     .required(),
 });
 
