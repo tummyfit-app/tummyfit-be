@@ -17,6 +17,7 @@ import authorizationMiddleware, {
   CustomRequest,
 } from "../middlewares/AuthorizationMiddleware";
 import { DecodedEntity } from "../entities/DecodedEntity";
+import { wrap } from "module";
 
 class AuthController implements Controller {
   router: Router = Router();
@@ -33,10 +34,27 @@ class AuthController implements Controller {
       wrapAsync(this.register.bind(this))
     );
     this.router.patch(
-      `${this.path}`,
+      `${this.path}/`,
       authorizationMiddleware,
       wrapAsync(this.update.bind(this))
     );
+    this.router.get(`${this.path}/`, wrapAsync(this.find.bind(this)));
+  }
+
+  async find(
+    req: Request,
+    response: Response,
+    next: NextFunction
+  ): Promise<Response | void> {
+    const username = (req as CustomRequest).user.username;
+    const result = await this.authService.findOne(username);
+
+    return response.json({
+      status: "success",
+      data: {
+        User: result,
+      },
+    });
   }
 
   async update(

@@ -5,9 +5,7 @@ class AppError extends Error implements CustomError {
     super(message);
   }
   public code: string = "";
-  public meta = {
-    target: "",
-  };
+  public meta: any = "";
 }
 
 export default AppError;

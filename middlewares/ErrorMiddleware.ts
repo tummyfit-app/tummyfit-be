@@ -1,6 +1,7 @@
-import { NextFunction, Request, Response } from "express";
+import { NextFunction, Request, Response, response } from "express";
 import AppError from "../utils/AppError";
 import { Err } from "joi";
+import prisma from "../config/DatabaseConnection";
 
 const PrismaErrorUniqueValidation = (error: AppError, response: Response) => {
   const message: string = `${error.meta.target} sudah terpakai, silahkan coba yang lain`;
@@ -8,6 +9,16 @@ const PrismaErrorUniqueValidation = (error: AppError, response: Response) => {
     status: "failed",
     statusCode: "400",
     message: message,
+  });
+};
+
+const PrismaUpdateNotFoundError = (error: AppError, response: Response) => {
+  const message = error.meta["cause"];
+
+  response.status(404).json({
+    status: "failed",
+    statusCode: "404",
+    message: `${message}`,
   });
 };
 
@@ -27,6 +38,8 @@ function middlewareError(
 
   if (error.code === "P2002") {
     PrismaErrorUniqueValidation(error, res);
+  } else if (error.code === "P2025") {
+    PrismaUpdateNotFoundError(error, res);
   } else {
     res.status(Number(codeStatus)).json({
       status: "failed",

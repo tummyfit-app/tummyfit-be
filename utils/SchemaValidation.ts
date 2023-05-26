@@ -50,3 +50,25 @@ export const updateUserSchema = joi.object().keys({
   email: joi.string().email(),
   namauser: joi.string().pattern(/^[a-zA-Z]+$/),
 });
+
+export const updateDescUserSchema = joi.object().keys({
+  birthDate: joi.date().iso().raw(),
+  height: joi.number().integer(),
+  weight: joi.number().integer(),
+  sex: joi.string().valid("male", "female"),
+  gluten_free: joi.string().valid("yes", "no"),
+  dairy_free: joi.string().valid("yes", "no"),
+  vegan: joi.string().valid("yes", "no"),
+  vegetarian: joi.string().valid("yes", "no"),
+  alcohol: joi.string().valid("yes", "no"),
+  daily_activity: joi
+    .string()
+    .valid(
+      "Sedentary",
+      "Lightly active",
+      "Moderately active",
+      "Very active",
+      "Extra active"
+    ),
+  purpose: joi.string().valid("Maintain weight", "Weight loss"),
+});

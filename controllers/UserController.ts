@@ -5,7 +5,7 @@ import authorizationMiddleware, {
   CustomRequest,
 } from "../middlewares/AuthorizationMiddleware";
 
-import { descSchema } from "../utils/SchemaValidation";
+import { descSchema, updateDescUserSchema } from "../utils/SchemaValidation";
 import { NextFunction } from "express";
 import AppError from "../utils/AppError";
 import UserEntity from "../entities/UserEntity";
@@ -30,6 +30,23 @@ class UserController implements Controller {
       authorizationMiddleware,
       wrapAsync(this.create.bind(this))
     );
+    this.router.patch(
+      `${this.path}/:id`,
+      authorizationMiddleware,
+      wrapAsync(this.update.bind(this))
+    );
+  }
+  async update(req: Request, response: Response, next: NextFunction) {
+    const { value, error } = updateDescUserSchema.validate(req.body);
+    const { id } = req.params;
+
+    if (error) return next(new AppError(error.message, "400"));
+
+    const result = await this.userService.update(value, id);
+    response.json({
+      status: "success",
+      message: result,
+    });
   }
 
   async create(req: Request, response: Response, next: NextFunction) {

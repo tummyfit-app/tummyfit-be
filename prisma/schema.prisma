@@ -33,12 +33,19 @@ model UserDescription {
   vegetarian     String
   alcohol        String
   daily_activity String
+  age            Int
   purpose        String
   user           User     @relation(fields: [userId], references: [id])
   userId         String   @unique
 }
 
 model Foods {
-  id          String @id @default(uuid())
-  instruction String @db.Text
+  id           String   @id @default(uuid())
+  name         String
+  calories     Decimal
+  fat          Decimal
+  protein      Decimal
+  image        String
+  ingredients  String[]
+  instructions String   @db.Text
 }

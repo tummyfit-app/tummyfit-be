@@ -2,11 +2,55 @@ import { PrismaClient } from "@prisma/client";
 import UserEntity from "../../entities/UserEntity";
 
 import IUserService from "./IUserService";
+import { calculate } from "../../utils/CalculateAge";
+import { date } from "joi";
 
 class UserService implements IUserService {
   private prisma: PrismaClient;
   constructor(prisma: PrismaClient) {
     this.prisma = prisma;
+  }
+  async update(
+    payload: UserEntity,
+    dataId: string
+  ): Promise<UserEntity | void> {
+    let age: any = undefined;
+
+    const result = await this.prisma.userDescription.findFirst({
+      where: {
+        id: dataId,
+      },
+    });
+
+    if (result) {
+      age = result.age;
+    } else {
+      if (payload.birthDate) age = calculate(payload.birthDate);
+      else age = undefined;
+    }
+    console.log(age);
+
+    return this.prisma.userDescription.update({
+      where: {
+        id: dataId,
+      },
+      data: {
+        alcohol: payload.alcohol || undefined,
+        userId: payload.userId || undefined,
+        age: age || undefined,
+        birthDate: payload.birthDate || undefined,
+        height: payload.height || undefined,
+        weight: payload.weight || undefined,
+        sex: payload.sex || undefined,
+        gluten_free: payload.gluten_free || undefined,
+        daily_activity: payload.daily_activity || undefined,
+        dairy_free: payload.dairy_free || undefined,
+        vegan: payload.vegan || undefined,
+        vegetarian: payload.vegetarian || undefined,
+        purpose: payload.purpose || undefined,
+        user: payload.user || undefined,
+      },
+    });
   }
 
   async findUser(id: string): Promise<UserEntity | null> {
@@ -49,10 +93,14 @@ class UserService implements IUserService {
     const month = parseInt(dateSplit[1]) - 1;
     const day = parseInt(dateSplit[2]);
     const dateTime = new Date(year, month, day);
+
     dateTime.setUTCHours(dateTime.getUTCHours() + 7);
+
+    const ageUser = calculate(dateTime);
 
     return this.prisma.userDescription.create({
       data: {
+        age: ageUser,
         birthDate: dateTime,
         height: payload.height,
         weight: payload.weight,
