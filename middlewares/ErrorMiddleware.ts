@@ -1,7 +1,5 @@
 import { NextFunction, Request, Response, response } from "express";
 import AppError from "../utils/AppError";
-import { Err } from "joi";
-import prisma from "../config/DatabaseConnection";
 
 const PrismaErrorUniqueValidation = (error: AppError, response: Response) => {
   const message: string = `${error.meta.target} sudah terpakai, silahkan coba yang lain`;

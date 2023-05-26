@@ -28,7 +28,6 @@ class UserService implements IUserService {
       if (payload.birthDate) age = calculate(payload.birthDate);
       else age = undefined;
     }
-    console.log(age);
 
     return this.prisma.userDescription.update({
       where: {

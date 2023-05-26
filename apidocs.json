@@ -122,11 +122,49 @@
         }
       }
     },
+    "/api/v1/users/{id}": {
+      "patch": {
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "tags": ["User"],
+        "summary": "Melakukan update pada deskripsi user",
+        "description": "Endpoint ini bertujuan untuk melakukan update kepada deskripsi user. Tidak hanya itu, terdapat **id dari deskripsi user** juga yang digunakan sebagai parameter untuk melakukan querying spesifik ke deskripsi user nya.",
+        "operationId": "updateDesc",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DescUpdate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "**Response Sukses.** <br> Pengguna berhasil melakukan update terhadap deskripsi miliknya."
+          }
+        }
+      }
+    },
     "/api/v1/users": {
       "get": {
         "tags": ["User"],
         "summary": "Mendapatkan spesifik data user & deskripsi miliknya",
-        "description": "Endpoint ini bertujuan untuk mendapatkan hasil user description yang spesifik. User tersebut sudah harus melakukan login terlebih dahulu sehingga memiliki token yang sesuai dengan yang di mau.",
+        "description": "Endpoint ini bertujuan untuk mendapatkan hasil deskripsi user yang spesifik. User tersebut sudah harus melakukan login terlebih dahulu sehingga memiliki token yang sesuai dengan yang di mau.",
         "operationId": "getUserDesc",
         "security": [
           {
@@ -261,6 +299,15 @@
           "purpose": {
             "type": "string",
             "example": "diet"
+          }
+        }
+      },
+      "DescUpdate": {
+        "type": "object",
+        "properties": {
+          "weight": {
+            "type": "number",
+            "example": 70
           }
         }
       },
