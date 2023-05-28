@@ -2,7 +2,7 @@
   "name": "tummyfit",
   "version": "1.9.0",
   "prisma": {
-    "seed": "node ./builds/prisma/seed.js"
+    "seed": "ts prisma/seed.ts"
   },
   "description": "backend for tummyfit application",
   "main": "index.ts",
