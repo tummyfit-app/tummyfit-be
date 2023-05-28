@@ -73,11 +73,14 @@ class UserController implements Controller {
     });
   }
 
-  async findUser(req: Request, response: Response) {
+  async findUser(req: Request, response: Response, next: NextFunction) {
     //Harus diubah ID nya berdasarkan inputan user
     const user = (req as CustomRequest).user;
     const result = await this.userService.findUser(user.id);
-
+    if (!result) {
+      return next(new AppError("No Data found", "404"));
+    }
+    result.birthDate = result.birthDate.toISOString().split("T")[0];
     response.json({
       status: "success",
       data: {
