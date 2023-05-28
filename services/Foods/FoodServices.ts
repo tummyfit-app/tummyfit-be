@@ -9,12 +9,22 @@ class FoodService implements IFoodService {
     this.prisma = prisma;
   }
 
-  async select(): Promise<FoodEntity[]> {
+  async select(name: string | undefined): Promise<FoodEntity[]> {
     const finalData = (await this.prisma.foods.count()) - 10;
-    const random = Math.floor(Math.random() * (finalData - 1 + 1)) + 1;
+    let random = 0;
+    if (name === "undefined") {
+      name = "";
+      random = Math.floor(Math.random() * (finalData - 1 + 1)) + 1;
+    }
+
     return this.prisma.foods.findMany({
       take: 10,
       skip: random,
+      where: {
+        name: {
+          contains: name,
+        },
+      },
     });
   }
 }

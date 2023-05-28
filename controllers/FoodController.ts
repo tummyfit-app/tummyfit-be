@@ -21,7 +21,8 @@ class FoodController implements Controller {
   }
 
   async select(req: Request, response: Response, next: NextFunction) {
-    const result = await this.foodService.select();
+    const { name } = req.query;
+    const result = await this.foodService.select(name + "");
     response.json({
       status: "success",
       statusCode: "200",
