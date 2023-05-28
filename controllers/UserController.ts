@@ -46,7 +46,7 @@ class UserController implements Controller {
     response.json({
       status: "success",
       data: result,
-      message: `${Object.keys(value)} telah diperbaharui`,
+      message: `Data telah diperbaharui`,
     });
   }
 

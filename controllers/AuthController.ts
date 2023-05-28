@@ -77,7 +77,7 @@ class AuthController implements Controller {
       status: "success",
       statusCode: "200",
       response: {
-        message: `${Object.keys(value)} telah diperbaharui`,
+        message: `Data telah diperbaharui`,
       },
     });
   }
