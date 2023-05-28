@@ -38,8 +38,16 @@ CREATE TABLE "Foods" (
     "calories" DECIMAL(65,30) NOT NULL,
     "fat" DECIMAL(65,30) NOT NULL,
     "protein" DECIMAL(65,30) NOT NULL,
+    "carbo" DECIMAL(65,30) NOT NULL,
+    "alcohol" DECIMAL(65,30) NOT NULL,
     "image" TEXT NOT NULL,
     "ingredients" TEXT[],
+    "dishType" TEXT NOT NULL,
+    "halal" TEXT NOT NULL,
+    "popular" TEXT NOT NULL,
+    "ready_minutes" TEXT NOT NULL,
+    "price" DECIMAL(65,30) NOT NULL,
+    "vegetarian" TEXT NOT NULL,
     "instructions" TEXT NOT NULL,
 
     CONSTRAINT "Foods_pkey" PRIMARY KEY ("id")

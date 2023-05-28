@@ -5,6 +5,8 @@ import prisma from "./config/DatabaseConnection";
 import AuthService from "./services/Auth/AuthService";
 import UserController from "./controllers/UserController";
 import UserService from "./services/User/UserService";
+import FoodController from "./controllers/FoodController";
+import FoodService from "./services/Foods/FoodServices";
 
 dotenv.config();
 
@@ -14,6 +16,7 @@ const app = new AppStarter(
   [
     new AuthController(new AuthService(prisma)),
     new UserController(new UserService(prisma)),
+    new FoodController(new FoodService(prisma)),
   ],
   PORT
 );

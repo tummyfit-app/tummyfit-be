@@ -1,12 +1,15 @@
 {
   "name": "tummyfit",
   "version": "1.9.0",
+  "prisma": {
+    "seed": "node ./builds/prisma/seed.js"
+  },
   "description": "backend for tummyfit application",
   "main": "index.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start:dev": "nodemon index.ts",
-    "init:prod": "npm i&&npx prisma migrate deploy",
+    "init:prod": "npm i&&npx prisma migrate deploy&&npx prisma db seed",
     "start:prod": "npx tsc&&node ./builds/index.js"
   },
   "author": "tummyfit",
@@ -14,7 +17,6 @@
   "dependencies": {
     "@joi/date": "^2.1.0",
     "@prisma/client": "^4.14.0",
-    "@vitalets/google-translate-api": "^9.2.0",
     "bcrypt": "^5.1.0",
     "cors": "^2.8.5",
     "csv-parser": "^3.0.0",

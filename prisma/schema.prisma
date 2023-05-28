@@ -40,12 +40,20 @@ model UserDescription {
 }
 
 model Foods {
-  id           String   @id @default(uuid())
-  name         String
-  calories     Decimal
-  fat          Decimal
-  protein      Decimal
-  image        String
-  ingredients  String[]
-  instructions String   @db.Text
+  id            String   @id @default(uuid())
+  name          String
+  calories      Decimal
+  fat           Decimal
+  protein       Decimal
+  carbo         Decimal
+  alcohol       Decimal
+  image         String
+  ingredients   String[]
+  dishType      String
+  halal         String
+  popular       String
+  ready_minutes String
+  price         Decimal
+  vegetarian    String
+  instructions  String   @db.Text
 }
