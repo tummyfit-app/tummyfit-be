@@ -3,6 +3,7 @@ import { Controller } from "../interfaces/Controller";
 import prisma from "../config/DatabaseConnection";
 import { IFoodService } from "../services/Foods/IFoodService";
 import wrapAsync from "../utils/CatchAsync";
+import authorizationMiddleware from "../middlewares/AuthorizationMiddleware";
 
 class FoodController implements Controller {
   router: Router = Router();
@@ -12,7 +13,11 @@ class FoodController implements Controller {
   }
 
   initialRouting() {
-    this.router.get(`${this.path}`, wrapAsync(this.select.bind(this)));
+    this.router.get(
+      `${this.path}`,
+      authorizationMiddleware,
+      wrapAsync(this.select.bind(this))
+    );
   }
 
   async select(req: Request, response: Response, next: NextFunction) {
