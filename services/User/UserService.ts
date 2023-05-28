@@ -138,7 +138,8 @@ class UserService implements IUserService {
           select: {
             username: true,
             email: true,
-            namauser: true,
+            firstname: true,
+            lastname: true,
           },
         },
       },

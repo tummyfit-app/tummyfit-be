@@ -23,7 +23,8 @@ class AuthService implements IAuth {
         username: body.username || undefined,
         email: body.email || undefined,
         password: body.password || undefined,
-        namauser: body.namauser || undefined,
+        firstname: body.firstname || undefined,
+        lastname: body.lastname || undefined,
       },
     });
   }
@@ -34,14 +35,16 @@ class AuthService implements IAuth {
         username: body.username,
         email: body.email,
         password: body.password,
-        namauser: body.namauser,
+        firstname: body.firstname,
+        lastname: body.lastname,
       },
       select: {
         id: true,
         username: true,
         password: true,
         email: true,
-        namauser: true,
+        firstname: true,
+        lastname: true,
       },
     });
   }
@@ -56,7 +59,8 @@ class AuthService implements IAuth {
         username: true,
         password: true,
         id: true,
-        namauser: true,
+        firstname: true,
+        lastname: true,
       },
     });
   }

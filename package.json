@@ -5,7 +5,7 @@
   "main": "index.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start:dev": "nodemon index.ts",
+    "start:dev": "ts-node ./seeders/seed.ts&&nodemon index.ts",
     "init:prod": "npm i&&npx prisma migrate deploy&&npx tsc",
     "start:prod": "node ./builds/seeders/seed.js&&node ./builds/index.js"
   },

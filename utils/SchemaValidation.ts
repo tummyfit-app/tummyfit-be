@@ -9,10 +9,11 @@ export const authSchema: ObjectSchema<AuthDTO> = joi.object().keys({
   username: joi.string().required().min(5),
   password: joi.string().required().min(5),
   email: joi.string().email().required(),
-  namauser: joi
+  firstname: joi
     .string()
     .pattern(/^[a-zA-Z ]*$/)
     .required(),
+  lastname: joi.string().pattern(/^[a-zA-Z ]*$/),
 });
 
 export const loginSchema: ObjectSchema<Login> = joi.object().keys({
@@ -48,7 +49,11 @@ export const updateUserSchema = joi.object().keys({
   username: joi.string().min(5),
   password: joi.string().min(5),
   email: joi.string().email(),
-  namauser: joi.string().pattern(/^[a-zA-Z ]*$/),
+  firstname: joi
+    .string()
+    .pattern(/^[a-zA-Z ]*$/)
+    .required(),
+  lastname: joi.string().pattern(/^[a-zA-Z ]*$/),
 });
 
 export const updateDescUserSchema = joi.object().keys({

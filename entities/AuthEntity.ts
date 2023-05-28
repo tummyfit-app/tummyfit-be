@@ -3,7 +3,8 @@ export interface AuthEntity {
   username?: string;
   password: string;
   email: string;
-  namauser: string;
+  firstname: string;
+  lastname?: string | null;
   createdAt?: Date;
   updatedAt?: Date;
 }

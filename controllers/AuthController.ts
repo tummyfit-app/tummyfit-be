@@ -128,7 +128,7 @@ class AuthController implements Controller {
     if (!comparePassword(value.password, result.password)) {
       return next(new AppError("invalid username or password", "400"));
     }
-    console.log(process.env.JWT_SECRET_KEY);
+
     if (!process.env.JWT_SECRET_KEY) {
       return next(new AppError("Environtment variable Invalid", "500"));
     }
