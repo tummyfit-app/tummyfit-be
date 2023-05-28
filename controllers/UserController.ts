@@ -45,7 +45,8 @@ class UserController implements Controller {
     const result = await this.userService.update(value, id);
     response.json({
       status: "success",
-      message: result,
+      data: result,
+      message: `${Object.keys(value)} telah diperbaharui`,
     });
   }
 
