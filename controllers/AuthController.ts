@@ -17,18 +17,8 @@ import authorizationMiddleware, {
   CustomRequest,
 } from "../middlewares/AuthorizationMiddleware";
 import { DecodedEntity } from "../entities/DecodedEntity";
-import multer from "multer";
-const optionStorage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, "uploads/");
-  },
-  filename: (req, file, cb) => {
-    cb(null, Date.now() + "-" + file.originalname);
-  },
-});
-
-const upload = multer({ storage: optionStorage });
-
+import dotenv from "dotenv";
+dotenv.config();
 class AuthController implements Controller {
   router: Router = Router();
   path: string = "/auth";
@@ -138,7 +128,7 @@ class AuthController implements Controller {
     if (!comparePassword(value.password, result.password)) {
       return next(new AppError("invalid username or password", "400"));
     }
-
+    console.log(process.env.JWT_SECRET_KEY);
     if (!process.env.JWT_SECRET_KEY) {
       return next(new AppError("Environtment variable Invalid", "500"));
     }

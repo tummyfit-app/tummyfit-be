@@ -29,6 +29,13 @@ class UserService implements IUserService {
       else age = undefined;
     }
 
+    const birthDateArray = payload.birthDate.split("-");
+
+    const year = parseInt(birthDateArray[0]);
+    const month = parseInt(birthDateArray[1]) - 1;
+    const day = parseInt(birthDateArray[2]);
+    const dateTime = new Date(year, month, day);
+
     return this.prisma.userDescription.update({
       where: {
         id: dataId,
@@ -37,7 +44,7 @@ class UserService implements IUserService {
         alcohol: payload.alcohol || undefined,
         userId: payload.userId || undefined,
         age: age || undefined,
-        birthDate: payload.birthDate || undefined,
+        birthDate: dateTime || undefined,
         height: payload.height || undefined,
         weight: payload.weight || undefined,
         sex: payload.sex || undefined,
@@ -59,6 +66,7 @@ class UserService implements IUserService {
       },
 
       select: {
+        id: true,
         birthDate: true,
         height: true,
         weight: true,

@@ -2,7 +2,7 @@ import { AuthEntity } from "./AuthEntity";
 
 interface UserEntity {
   id?: string;
-  birthDate: Date;
+  birthDate: any;
   height: number;
   weight: number;
   sex: string;

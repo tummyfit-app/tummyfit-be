@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import AppError from "../utils/AppError";
-import jwt, { JwtPayload } from "jsonwebtoken";
+import jwt from "jsonwebtoken";
 import { DecodedEntity } from "../entities/DecodedEntity";
 import prisma from "../config/DatabaseConnection";
 
@@ -45,6 +45,7 @@ async function authorizationMiddleware(
 
     next();
   } catch (error: any) {
+    console.log(error.message);
     return next(new AppError("Invalid token provided", "401"));
   }
 }
