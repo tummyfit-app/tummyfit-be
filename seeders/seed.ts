@@ -12,7 +12,7 @@ async function initSeed() {
     throw new Error("Data has been seeded");
   }
 
-  fs.createReadStream("./seeders/tummyfit_dataset.csv")
+  fs.createReadStream("tummyfit_dataset.csv")
     .pipe(csv())
     .on("data", async (data) => {
       const ingredientData = data["Ingredients"].split(",  ");

@@ -1,16 +1,13 @@
 {
   "name": "tummyfit",
   "version": "1.9.0",
-  "prisma": {
-    "seed": "ts-node prisma/seed.ts"
-  },
   "description": "backend for tummyfit application",
   "main": "index.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start:dev": "nodemon index.ts",
-    "init:prod": "npm i&&npx prisma migrate deploy&&npx prisma db seed",
-    "start:prod": "npx tsc&&node ./builds/index.js"
+    "init:prod": "npm i&&npx prisma migrate deploy&&npx tsc",
+    "start:prod": "node ./builds/seeders/seed.js&&node ./builds/index.js"
   },
   "author": "tummyfit",
   "license": "ISC",
@@ -25,6 +22,7 @@
     "helmet": "^7.0.0",
     "joi": "^17.9.2",
     "jsonwebtoken": "^9.0.0",
+    "multer": "^1.4.5-lts.1",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^4.6.3"
   },
@@ -33,6 +31,7 @@
     "@types/cors": "^2.8.13",
     "@types/express": "^4.17.17",
     "@types/jsonwebtoken": "^9.0.2",
+    "@types/multer": "^1.4.7",
     "@types/node": "^20.1.5",
     "@types/swagger-jsdoc": "^6.0.1",
     "@types/swagger-ui-express": "^4.1.3",

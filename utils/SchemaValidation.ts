@@ -48,7 +48,7 @@ export const updateUserSchema = joi.object().keys({
   username: joi.string().min(5),
   password: joi.string().min(5),
   email: joi.string().email(),
-  namauser: joi.string().pattern(/^[a-zA-Z]+$/),
+  namauser: joi.string().pattern(/^[a-zA-Z ]*$/),
 });
 
 export const updateDescUserSchema = joi.object().keys({

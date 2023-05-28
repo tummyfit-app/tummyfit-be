@@ -17,7 +17,17 @@ import authorizationMiddleware, {
   CustomRequest,
 } from "../middlewares/AuthorizationMiddleware";
 import { DecodedEntity } from "../entities/DecodedEntity";
-import { wrap } from "module";
+import multer from "multer";
+const optionStorage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "uploads/");
+  },
+  filename: (req, file, cb) => {
+    cb(null, Date.now() + "-" + file.originalname);
+  },
+});
+
+const upload = multer({ storage: optionStorage });
 
 class AuthController implements Controller {
   router: Router = Router();
