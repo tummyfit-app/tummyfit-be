@@ -1,6 +1,5 @@
 import { NextFunction, Request, Response, Router } from "express";
 import { Controller } from "../interfaces/Controller";
-import prisma from "../config/DatabaseConnection";
 import { IFoodService } from "../services/Foods/IFoodService";
 import wrapAsync from "../utils/CatchAsync";
 import authorizationMiddleware from "../middlewares/AuthorizationMiddleware";
@@ -28,12 +27,16 @@ class FoodController implements Controller {
 
   async selectId(req: Request, response: Response, next: NextFunction) {
     const result = await this.foodService.selectId(req.params.id);
-    console.log(result);
+
     if (!result) {
       return next(new AppError("No Data Found", "404"));
     }
     response.json({
       status: "success",
+      data: {
+        Food: result,
+      },
+      message: "Successfully fetching data",
     });
   }
 
