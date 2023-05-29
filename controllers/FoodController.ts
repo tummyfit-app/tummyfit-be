@@ -4,6 +4,7 @@ import prisma from "../config/DatabaseConnection";
 import { IFoodService } from "../services/Foods/IFoodService";
 import wrapAsync from "../utils/CatchAsync";
 import authorizationMiddleware from "../middlewares/AuthorizationMiddleware";
+import AppError from "../utils/AppError";
 
 class FoodController implements Controller {
   router: Router = Router();
@@ -18,6 +19,22 @@ class FoodController implements Controller {
       authorizationMiddleware,
       wrapAsync(this.select.bind(this))
     );
+    this.router.get(
+      `${this.path}/:id`,
+      authorizationMiddleware,
+      wrapAsync(this.selectId.bind(this))
+    );
+  }
+
+  async selectId(req: Request, response: Response, next: NextFunction) {
+    const result = await this.foodService.selectId(req.params.id);
+    console.log(result);
+    if (!result) {
+      return next(new AppError("No Data Found", "404"));
+    }
+    response.json({
+      status: "success",
+    });
   }
 
   async select(req: Request, response: Response, next: NextFunction) {

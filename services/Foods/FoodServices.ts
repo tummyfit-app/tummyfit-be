@@ -8,6 +8,13 @@ class FoodService implements IFoodService {
   constructor(prisma: PrismaClient) {
     this.prisma = prisma;
   }
+  selectId(id: string): Promise<FoodEntity | null> {
+    return this.prisma.foods.findFirst({
+      where: {
+        id,
+      },
+    });
+  }
 
   async select(name: string | undefined): Promise<FoodEntity[]> {
     const finalData = (await this.prisma.foods.count()) - 10;
