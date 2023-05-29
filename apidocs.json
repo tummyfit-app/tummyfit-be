@@ -27,6 +27,10 @@
     {
       "name": "User",
       "description": "Endpoint mengenai user dan user description"
+    },
+    {
+      "name": "Foods",
+      "description": "Endpoint mengenai Foods dan detail nya"
     }
   ],
   "paths": {
@@ -209,6 +213,24 @@
           },
           "401": {
             "description": "**Response Gagal**. <br> Tidak ada nya autorisasi atau token yang disisipkan."
+          }
+        }
+      }
+    },
+    "/api/v1/foods": {
+      "get": {
+        "tags": ["Foods"],
+        "summary": "mengambil 10 data foods secara random",
+        "description": "Endpoint ini berguna untuk mendapatkan 10 data foods secara random",
+        "operationId": "getFoods",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "**Response Sukses**. <br> Berhasil mendapatkan data foods"
           }
         }
       }

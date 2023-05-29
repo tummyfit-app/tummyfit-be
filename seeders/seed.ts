@@ -3,23 +3,18 @@ import csv from "csv-parser";
 import prisma from "../config/DatabaseConnection";
 
 async function initSeed() {
-  // const result = await prisma.foods.findMany({
-  //   take: 1,
-  //   skip: 1,
-  // });
-  const result: any[] = [];
-  // if (result.length !== 0) {
-  //   throw new Error("Data has been seeded");
-  // }
-  const resultParent: any[] = [];
+  const result = await prisma.foods.findMany({
+    take: 1,
+    skip: 1,
+  });
+
+  if (result.length !== 0) {
+    throw new Error("Data has been seeded");
+  }
 
   fs.createReadStream("./seeders/tummyfit_dataset.csv")
     .pipe(csv())
     .on("data", async (data) => {
-      // if (data["Gluten Free"] === "True") result.push("Gluten Free");
-      // if (data["Dairy Free"] === "True") result.push("Dairy Free");
-      // if (data["Vegetarian"] === "True") result.push("Vegetarian");
-      // result.push(data["Dish Type"]);
       const ingredientData = data["Ingredients"].split(",  ");
       await prisma.foods.create({
         data: {
