@@ -4,6 +4,7 @@ import { IFoodService } from "../services/Foods/IFoodService";
 import wrapAsync from "../utils/CatchAsync";
 import authorizationMiddleware from "../middlewares/AuthorizationMiddleware";
 import AppError from "../utils/AppError";
+import { FoodEntity } from "../entities/FoodEntity";
 
 class FoodController implements Controller {
   router: Router = Router();
@@ -26,7 +27,9 @@ class FoodController implements Controller {
   }
 
   async selectId(req: Request, response: Response, next: NextFunction) {
-    const result = await this.foodService.selectId(req.params.id);
+    const result: FoodEntity | null = await this.foodService.selectId(
+      req.params.id
+    );
 
     if (!result) {
       return next(new AppError("No Data Found", "404"));
@@ -41,8 +44,7 @@ class FoodController implements Controller {
   }
 
   async select(req: Request, response: Response, next: NextFunction) {
-    const { name } = req.query;
-    const result = await this.foodService.select(name + "");
+    const result = await this.foodService.select(req.query);
     response.json({
       status: "success",
       statusCode: "200",

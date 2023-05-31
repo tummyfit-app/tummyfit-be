@@ -1,6 +1,6 @@
 import { FoodEntity } from "../../entities/FoodEntity";
 
 export interface IFoodService {
-  select(name: string | undefined): Promise<FoodEntity[]>;
+  select(query: any): Promise<FoodEntity[]>;
   selectId(id: string): Promise<FoodEntity | null>;
 }
