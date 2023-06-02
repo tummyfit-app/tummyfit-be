@@ -15,11 +15,17 @@ class AuthService implements IAuth {
     if (body.password !== undefined) {
       body.password = hashPassword(body.password);
     }
+
+    if (body.urlprofile) {
+      body.urlprofile = `https://express-ts-production-f6c5.up.railway.app/images/${body.urlprofile}`;
+    }
+
     return this.prisma.user.update({
       where: {
         id,
       },
       data: {
+        urlprofile: body.urlprofile || undefined,
         username: body.username || undefined,
         email: body.email || undefined,
         password: body.password || undefined,
@@ -61,6 +67,7 @@ class AuthService implements IAuth {
         id: true,
         firstname: true,
         lastname: true,
+        urlprofile: true,
       },
     });
   }

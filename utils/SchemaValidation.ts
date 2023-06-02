@@ -49,11 +49,9 @@ export const updateUserSchema = joi.object().keys({
   username: joi.string().min(5),
   password: joi.string().min(5),
   email: joi.string().email(),
-  firstname: joi
-    .string()
-    .pattern(/^[a-zA-Z ]*$/)
-    .required(),
+  firstname: joi.string().pattern(/^[a-zA-Z ]*$/),
   lastname: joi.string().pattern(/^[a-zA-Z ]*$/),
+  urlprofile: joi.string(),
 });
 
 export const updateDescUserSchema = joi.object().keys({

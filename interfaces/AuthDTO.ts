@@ -4,6 +4,7 @@ interface AuthDTO {
   email: string;
   firstname: string;
   lastname?: string;
+  urlprofile: string;
 }
 
 export default AuthDTO;

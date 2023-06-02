@@ -2,7 +2,6 @@ import { PrismaClient } from "@prisma/client";
 import prisma from "../../config/DatabaseConnection";
 import { FoodEntity } from "../../entities/FoodEntity";
 import { IFoodService } from "./IFoodService";
-import QueryParam from "../../interfaces/QueryDTO";
 
 class FoodService implements IFoodService {
   private prisma: PrismaClient;

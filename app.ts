@@ -5,6 +5,7 @@ import AppError from "./utils/AppError";
 import swaggerUI from "swagger-ui-express";
 import * as swaggerDoc from "./apidocs.json";
 import cors from "cors";
+import path from "path";
 
 class AppStarter {
   private express: Application;
@@ -34,6 +35,7 @@ class AppStarter {
     this.express.use(cors());
     this.express.use(express.urlencoded({ extended: true }));
     this.express.use(express.json());
+    this.express.use("/images", express.static("uploads"));
     this.express.use(
       "/api-docs",
       swaggerUI.serve,

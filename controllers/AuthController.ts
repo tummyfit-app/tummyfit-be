@@ -17,8 +17,33 @@ import authorizationMiddleware, {
   CustomRequest,
 } from "../middlewares/AuthorizationMiddleware";
 import { DecodedEntity } from "../entities/DecodedEntity";
-import dotenv from "dotenv";
-dotenv.config();
+import multer from "multer";
+
+const multerStorage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "./uploads");
+  },
+  filename: (req, file, cb) => {
+    cb(null, Date.now() + file.originalname);
+  },
+});
+
+const filterFile = (req: Request, file: Express.Multer.File, cb: any) => {
+  if (file.mimetype === "image/jpeg" || file.mimetype === "image/png") {
+    cb(null, true);
+  } else {
+    cb(new AppError("File harus berupa gambar  JPG atau PNG", "400"));
+  }
+};
+
+const upload = multer({
+  storage: multerStorage,
+  limits: {
+    fileSize: 10 * 1024 * 1024,
+  },
+  fileFilter: filterFile,
+});
+
 class AuthController implements Controller {
   router: Router = Router();
   path: string = "/auth";
@@ -36,6 +61,7 @@ class AuthController implements Controller {
     this.router.patch(
       `${this.path}/`,
       authorizationMiddleware,
+      upload.single("file"),
       wrapAsync(this.update.bind(this))
     );
     this.router.get(`${this.path}/`, wrapAsync(this.find.bind(this)));
@@ -62,11 +88,19 @@ class AuthController implements Controller {
     response: Response,
     next: NextFunction
   ): Promise<void | Response> {
+    let data = undefined;
+    if (!req.file) {
+      data = undefined;
+    } else {
+      data = req.file.filename;
+    }
+    req.body["urlprofile"] = data;
     const { value, error } = updateUserSchema.validate(req.body);
     const user: DecodedEntity = (req as CustomRequest).user;
     if (Object.keys(value).length === 0) {
       return response.status(204).json({});
     }
+
     if (error) {
       return next(new AppError(error.message, "400"));
     }
