@@ -5,10 +5,9 @@ import AppError from "./utils/AppError";
 import swaggerUI from "swagger-ui-express";
 import * as swaggerDoc from "./apidocs.json";
 import cors from "cors";
-import path from "path";
 
 class AppStarter {
-  private express: Application;
+  express: Application;
   private port: string;
   private options: object;
   constructor(private controllers: Controller[], port: string) {
@@ -47,6 +46,10 @@ class AppStarter {
     controllers.forEach((controller: Controller) => {
       this.express.use("/api", controller.router);
     });
+  }
+
+  public getApp() {
+    return this.express;
   }
 
   public listenServer() {

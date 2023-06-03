@@ -12,7 +12,7 @@ dotenv.config();
 
 const PORT: string = process.env.PORT || "3000";
 
-const app = new AppStarter(
+export const app = new AppStarter(
   [
     new AuthController(new AuthService(prisma)),
     new UserController(new UserService(prisma)),
@@ -20,4 +20,3 @@ const app = new AppStarter(
   ],
   PORT
 );
-app.listenServer();

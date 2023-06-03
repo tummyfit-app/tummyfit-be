@@ -263,7 +263,10 @@
           "username": {
             "type": "string"
           },
-          "namauser": {
+          "firstname": {
+            "type": "string"
+          },
+          "lastname": {
             "type": "string"
           },
           "email": {
