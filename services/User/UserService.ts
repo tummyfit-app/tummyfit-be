@@ -81,6 +81,7 @@ class UserService implements IUserService {
         userId: true,
         user: {
           select: {
+            urlprofile: true,
             username: true,
             email: true,
             firstname: true,
