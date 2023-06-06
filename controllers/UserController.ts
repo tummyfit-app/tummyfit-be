@@ -20,16 +20,17 @@ class UserController implements Controller {
   }
 
   initialRouting() {
-    this.router.get(
-      `${this.path}/`,
-      authorizationMiddleware,
-      wrapAsync(this.findUser.bind(this))
-    );
     this.router.post(
       `${this.path}/`,
       authorizationMiddleware,
       wrapAsync(this.create.bind(this))
     );
+    this.router.get(
+      `${this.path}/`,
+      authorizationMiddleware,
+      wrapAsync(this.findUser.bind(this))
+    );
+
     this.router.patch(
       `${this.path}/:id`,
       authorizationMiddleware,

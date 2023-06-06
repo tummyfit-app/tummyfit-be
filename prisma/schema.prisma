@@ -33,7 +33,7 @@ model UserDescription {
   dairy_free     String
   vegan          String
   vegetarian     String
-  alcohol        String
+  halal          String
   daily_activity String
   age            Int
   purpose        String

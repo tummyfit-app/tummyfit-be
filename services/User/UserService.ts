@@ -3,7 +3,6 @@ import UserEntity from "../../entities/UserEntity";
 
 import IUserService from "./IUserService";
 import { calculate } from "../../utils/CalculateAge";
-import { date } from "joi";
 
 class UserService implements IUserService {
   private prisma: PrismaClient;
@@ -41,7 +40,7 @@ class UserService implements IUserService {
         id: dataId,
       },
       data: {
-        alcohol: payload.alcohol || undefined,
+        halal: payload.halal || undefined,
         userId: payload.userId || undefined,
         age: age || undefined,
         birthDate: dateTime || undefined,
@@ -66,6 +65,7 @@ class UserService implements IUserService {
       },
 
       select: {
+        age: true,
         id: true,
         birthDate: true,
         height: true,
@@ -76,7 +76,7 @@ class UserService implements IUserService {
         dairy_free: true,
         vegan: true,
         vegetarian: true,
-        alcohol: true,
+        halal: true,
         purpose: true,
         userId: true,
         user: {
@@ -119,12 +119,13 @@ class UserService implements IUserService {
         dairy_free: payload.dairy_free,
         vegan: payload.vegan,
         vegetarian: payload.vegetarian,
-        alcohol: payload.alcohol,
+        halal: payload.halal,
         daily_activity: payload.daily_activity,
         purpose: payload.purpose,
         userId: userId,
       },
       select: {
+        age: true,
         birthDate: true,
         height: true,
         weight: true,
@@ -134,7 +135,7 @@ class UserService implements IUserService {
         dairy_free: true,
         vegan: true,
         vegetarian: true,
-        alcohol: true,
+        halal: true,
         purpose: true,
         userId: true,
         user: {

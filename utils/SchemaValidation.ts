@@ -1,8 +1,6 @@
 import joi, { ObjectSchema } from "joi";
 import AuthDTO from "../interfaces/AuthDTO";
 import { Login } from "../interfaces/LoginDTO";
-import joiDate from "@joi/date";
-const joy = joi.extend(joiDate);
 
 //schema for register.
 export const authSchema: ObjectSchema<AuthDTO> = joi.object().keys({
@@ -31,7 +29,7 @@ export const descSchema = joi.object().keys({
   dairy_free: joi.string().required().valid("yes", "no"),
   vegan: joi.string().required().valid("yes", "no"),
   vegetarian: joi.string().required().valid("yes", "no"),
-  alcohol: joi.string().required().valid("yes", "no"),
+  halal: joi.string().required().valid("yes", "no"),
   daily_activity: joi
     .string()
     .required()
@@ -63,7 +61,7 @@ export const updateDescUserSchema = joi.object().keys({
   dairy_free: joi.string().valid("yes", "no"),
   vegan: joi.string().valid("yes", "no"),
   vegetarian: joi.string().valid("yes", "no"),
-  alcohol: joi.string().valid("yes", "no"),
+  halal: joi.string().valid("yes", "no"),
   daily_activity: joi
     .string()
     .valid(

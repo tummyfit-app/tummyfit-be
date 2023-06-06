@@ -1,7 +1,6 @@
-import { AuthEntity } from "./AuthEntity";
-
 interface UserEntity {
   id?: string;
+  age: number;
   birthDate: any;
   height: number;
   weight: number;
@@ -10,7 +9,7 @@ interface UserEntity {
   dairy_free: string;
   vegan: string;
   vegetarian: string;
-  alcohol: string;
+  halal: string;
   daily_activity: string;
   purpose: string;
   userId: string;

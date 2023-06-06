@@ -16,7 +16,7 @@ export const app = new AppStarter(
   [
     new AuthController(new AuthService(prisma)),
     new UserController(new UserService(prisma)),
-    new FoodController(new FoodService(prisma)),
+    new FoodController(new FoodService(prisma), new UserService(prisma)),
   ],
   PORT
 );

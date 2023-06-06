@@ -2,14 +2,22 @@ import { NextFunction, Request, Response, Router } from "express";
 import { Controller } from "../interfaces/Controller";
 import { IFoodService } from "../services/Foods/IFoodService";
 import wrapAsync from "../utils/CatchAsync";
-import authorizationMiddleware from "../middlewares/AuthorizationMiddleware";
+import authorizationMiddleware, {
+  CustomRequest,
+} from "../middlewares/AuthorizationMiddleware";
 import AppError from "../utils/AppError";
 import { FoodEntity } from "../entities/FoodEntity";
+import axios from "axios";
+import IUserService from "../services/User/IUserService";
+import validPayload from "../utils/PredictPayload";
 
 class FoodController implements Controller {
   router: Router = Router();
   path: string = "/v1/foods";
-  constructor(private foodService: IFoodService) {
+  constructor(
+    private foodService: IFoodService,
+    private userService: IUserService
+  ) {
     this.initialRouting();
   }
 
@@ -18,6 +26,11 @@ class FoodController implements Controller {
       `${this.path}`,
       authorizationMiddleware,
       wrapAsync(this.select.bind(this))
+    );
+    this.router.get(
+      `${this.path}/predict`,
+      authorizationMiddleware,
+      wrapAsync(this.predict.bind(this))
     );
     this.router.get(
       `${this.path}/:id`,
@@ -52,6 +65,27 @@ class FoodController implements Controller {
         Foods: result,
       },
       message: "Success getting foods data",
+    });
+  }
+
+  async predict(req: Request, response: Response, next: NextFunction) {
+    const user = (req as CustomRequest).user;
+
+    const result = await this.userService.findUser(user.id);
+    console.log(result);
+    if (!result) {
+      return next(new AppError("Data not found", "404"));
+    }
+    const dataPayload = validPayload(result);
+    const predictionData = await axios.post(
+      "https://tummyfit-prediction-production.up.railway.app/",
+      dataPayload
+    );
+
+    return response.json({
+      status: "success",
+      Prediction: predictionData.data,
+      message: "Success do prediction",
     });
   }
 }

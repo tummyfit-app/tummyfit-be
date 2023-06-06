@@ -8,6 +8,7 @@ class FoodService implements IFoodService {
   constructor(prisma: PrismaClient) {
     this.prisma = prisma;
   }
+
   selectId(id: string): Promise<FoodEntity | null> {
     return this.prisma.foods.findFirst({
       where: {
