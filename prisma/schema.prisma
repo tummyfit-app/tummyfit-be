@@ -54,8 +54,8 @@ model Foods {
   dishType      String
   halal         String
   popular       String
-  ready_minutes String
-  price         Decimal
+  ready_minutes Int
+  price         Int
   vegetarian    String
   instructions  String   @db.Text
 }

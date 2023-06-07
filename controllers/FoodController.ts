@@ -60,7 +60,7 @@ class FoodController implements Controller {
     const result = await this.foodService.select(req.query);
     response.json({
       status: "success",
-      statusCode: "200",
+      statusCode: 200,
       data: {
         Foods: result,
       },

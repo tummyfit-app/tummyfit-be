@@ -19,8 +19,8 @@ async function initSeed() {
       await prisma.foods.create({
         data: {
           protein: parseFloat(data["Protein/g"]).toFixed(2),
-          price: parseFloat(data["Price Per Serving"]).toFixed(4),
-          ready_minutes: data["Ready in Minutes"],
+          price: parseInt(data["Price Per Serving"]),
+          ready_minutes: Number(data["Ready in Minutes"]),
           calories: parseFloat(data["Calories"]).toFixed(2),
           dishType: data["Dish Type"],
           vegetarian: data["Vegetarian"],

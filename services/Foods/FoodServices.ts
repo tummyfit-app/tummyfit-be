@@ -1,5 +1,5 @@
 import { PrismaClient } from "@prisma/client";
-import prisma from "../../config/DatabaseConnection";
+
 import { FoodEntity } from "../../entities/FoodEntity";
 import { IFoodService } from "./IFoodService";
 
@@ -9,10 +9,17 @@ class FoodService implements IFoodService {
     this.prisma = prisma;
   }
 
-  selectId(id: string): Promise<FoodEntity | null> {
+  selectId(idName: string): Promise<FoodEntity | null> {
     return this.prisma.foods.findFirst({
       where: {
-        id,
+        OR: [
+          {
+            id: idName || undefined,
+          },
+          {
+            name: idName || undefined,
+          },
+        ],
       },
     });
   }
@@ -28,12 +35,25 @@ class FoodService implements IFoodService {
         skip: random,
       });
     }
-    const { name, dishtype } = payload;
+    const { name, dishtype, halal, popular, minutes, price } = payload;
 
     return this.prisma.foods.findMany({
       take: 10,
       skip: 0,
       where: {
+        price: {
+          lte: parseInt(price) || undefined,
+        },
+        ready_minutes: {
+          lte: parseInt(minutes) || undefined,
+        },
+
+        popular: {
+          contains: popular || undefined,
+        },
+        halal: {
+          contains: halal || undefined,
+        },
         dishType: {
           contains: dishtype || undefined,
         },

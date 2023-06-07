@@ -18,15 +18,9 @@ import authorizationMiddleware, {
 } from "../middlewares/AuthorizationMiddleware";
 import { DecodedEntity } from "../entities/DecodedEntity";
 import multer from "multer";
+import uploadToGcs from "../middlewares/StorageUpload";
 
-const multerStorage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, "./uploads");
-  },
-  filename: (req, file, cb) => {
-    cb(null, Date.now() + file.originalname);
-  },
-});
+const multerStorage = multer.memoryStorage();
 
 const filterFile = (req: Request, file: Express.Multer.File, cb: any) => {
   if (file.mimetype === "image/jpeg" || file.mimetype === "image/png") {
@@ -39,7 +33,7 @@ const filterFile = (req: Request, file: Express.Multer.File, cb: any) => {
 const upload = multer({
   storage: multerStorage,
   limits: {
-    fileSize: 10 * 1024 * 1024,
+    fileSize: 5 * 1024 * 1024,
   },
   fileFilter: filterFile,
 });
@@ -62,6 +56,7 @@ class AuthController implements Controller {
       `${this.path}/`,
       authorizationMiddleware,
       upload.single("file"),
+      uploadToGcs,
       wrapAsync(this.update.bind(this))
     );
     this.router.get(`${this.path}/`, wrapAsync(this.find.bind(this)));
@@ -89,11 +84,12 @@ class AuthController implements Controller {
     next: NextFunction
   ): Promise<void | Response> {
     let data = undefined;
-    if (!req.file) {
-      data = undefined;
+    if (req.file && (req.file as any).cloudUrl) {
+      data = (req.file as any).cloudUrl;
     } else {
-      data = req.file.filename;
+      data = undefined;
     }
+
     req.body["urlprofile"] = data;
     const { value, error } = updateUserSchema.validate(req.body);
     const user: DecodedEntity = (req as CustomRequest).user;

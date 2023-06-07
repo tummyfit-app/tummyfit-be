@@ -4,6 +4,7 @@ import { IAuth } from "./IAuthService";
 
 import AuthDTO from "../../interfaces/AuthDTO";
 import { hashPassword } from "../../utils/Bcrypt";
+import { gcsStorage } from "../../middlewares/StorageUpload";
 
 class AuthService implements IAuth {
   private prisma: PrismaClient;
@@ -12,12 +13,27 @@ class AuthService implements IAuth {
   }
 
   async update(id: string, body: AuthDTO): Promise<AuthEntity> {
+    const bucketName = process.env.BUCKET || "tummy-bucket";
+    const bucket = gcsStorage.bucket(bucketName);
     if (body.password !== undefined) {
       body.password = hashPassword(body.password);
     }
+    const dataBefore = await this.prisma.user.findFirst({
+      where: {
+        id,
+      },
+    });
+    if (dataBefore) {
+      const data = dataBefore.urlprofile.split("/");
+      const dataAkhir: string = data[data.length - 1];
 
-    if (body.urlprofile) {
-      body.urlprofile = `https://express-ts-production-f6c5.up.railway.app/images/${body.urlprofile}`;
+      const file = bucket.file(`assets/${dataAkhir}`);
+      const [exists] = await file.exists();
+      if (exists) {
+        await file.delete();
+      } else {
+        console.log("===================");
+      }
     }
 
     return this.prisma.user.update({

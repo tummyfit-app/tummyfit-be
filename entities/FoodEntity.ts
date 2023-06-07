@@ -12,8 +12,8 @@ export interface FoodEntity {
   dishType: string;
   halal: string;
   popular: string;
-  ready_minutes: string;
-  price: Prisma.Decimal;
+  ready_minutes: number;
+  price: number;
   vegetarian: string;
   instructions: string;
 }
