@@ -72,13 +72,12 @@ class FoodController implements Controller {
     const user = (req as CustomRequest).user;
 
     const result = await this.userService.findUser(user.id);
-    console.log(result);
     if (!result) {
       return next(new AppError("Data not found", "404"));
     }
     const dataPayload = validPayload(result);
     const predictionData = await axios.post(
-      "https://tummyfit-prediction-production.up.railway.app/",
+      "https://tummyfit-app-model-4t7swivhca-uc.a.run.app",
       dataPayload
     );
 

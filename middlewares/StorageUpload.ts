@@ -6,11 +6,11 @@ import AppError from "../utils/AppError";
 const pathKey = path.resolve("./credentials.json");
 
 export const gcsStorage = new Storage({
-  projectId: "test-project-388616",
+  projectId: "tummyfit",
   keyFilename: pathKey,
 });
 
-const bucketName = process.env.BUCKET || "tummy-bucket";
+const bucketName = process.env.BUCKET || "tummyfit";
 const bucket = gcsStorage.bucket(bucketName);
 
 function publicUrl(filename: string) {

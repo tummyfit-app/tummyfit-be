@@ -13,7 +13,7 @@ class AuthService implements IAuth {
   }
 
   async update(id: string, body: AuthDTO): Promise<AuthEntity> {
-    const bucketName = process.env.BUCKET || "tummy-bucket";
+    const bucketName = process.env.BUCKET || "tummyfit";
     const bucket = gcsStorage.bucket(bucketName);
     if (body.password !== undefined) {
       body.password = hashPassword(body.password);
