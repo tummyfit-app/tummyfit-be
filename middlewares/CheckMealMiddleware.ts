@@ -4,8 +4,6 @@ moment.locale("id");
 import prisma from "../config/DatabaseConnection";
 import { CustomRequest } from "./AuthorizationMiddleware";
 
-const today = moment(new Date());
-
 async function checkMeal(req: Request, response: Response, next: NextFunction) {
   const user = (req as CustomRequest).user;
   const result = await prisma.userMealPlan.findMany({
@@ -13,7 +11,7 @@ async function checkMeal(req: Request, response: Response, next: NextFunction) {
       userId: user.id,
     },
   });
-  if (result) {
+  if (result.length >= 1) {
     if (moment(new Date()).isoWeek() === moment(result[0].date).isoWeek())
       return response.json({
         status: "success",
