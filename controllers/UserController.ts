@@ -10,6 +10,8 @@ import { NextFunction } from "express";
 import AppError from "../utils/AppError";
 import UserEntity from "../entities/UserEntity";
 import wrapAsync from "../utils/CatchAsync";
+import moment from "moment";
+moment.locale("id");
 
 class UserController implements Controller {
   router: Router = Router();
@@ -78,6 +80,7 @@ class UserController implements Controller {
     //Harus diubah ID nya berdasarkan inputan user
     const user = (req as CustomRequest).user;
     const result = await this.userService.findUser(user.id);
+
     if (!result) {
       return next(new AppError("No Data found", "404"));
     }

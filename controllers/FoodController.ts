@@ -10,6 +10,7 @@ import { FoodEntity } from "../entities/FoodEntity";
 import axios from "axios";
 import IUserService from "../services/User/IUserService";
 import validPayload from "../utils/PredictPayload";
+import checkMeal from "../middlewares/CheckMealMiddleware";
 
 class FoodController implements Controller {
   router: Router = Router();
@@ -30,6 +31,7 @@ class FoodController implements Controller {
     this.router.get(
       `${this.path}/predict`,
       authorizationMiddleware,
+      checkMeal,
       wrapAsync(this.predict.bind(this))
     );
     this.router.get(
@@ -77,13 +79,16 @@ class FoodController implements Controller {
     }
     const dataPayload = validPayload(result);
     const predictionData = await axios.post(
-      "https://tummyfit-app-model-4t7swivhca-uc.a.run.app",
+      "https://tummyfit-prediction-production.up.railway.app/",
       dataPayload
     );
+    const { data } = predictionData;
+
+    const resultData = await this.foodService.insertMealPlan(data, user.id);
 
     return response.json({
       status: "success",
-      Prediction: predictionData.data,
+      Prediction: resultData,
       message: "Success do prediction",
     });
   }

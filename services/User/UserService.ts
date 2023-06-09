@@ -86,6 +86,7 @@ class UserService implements IUserService {
             email: true,
             firstname: true,
             lastname: true,
+            updatedAt: true,
           },
         },
       },

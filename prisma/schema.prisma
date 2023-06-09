@@ -21,6 +21,7 @@ model User {
   createdAt       DateTime         @default(now())
   updatedAt       DateTime         @default(now()) @updatedAt
   UserDescription UserDescription?
+  UserMealPlan    UserMealPlan[]
 }
 
 model UserDescription {
@@ -58,4 +59,16 @@ model Foods {
   price         Int
   vegetarian    String
   instructions  String   @db.Text
+}
+
+model UserMealPlan {
+  id        String  @id @default(uuid())
+  category  String
+  image_url String
+  food_name String
+  day       String
+  calories  Decimal
+  user      User    @relation(fields: [userId], references: [id])
+  userId    String
+  date      String
 }
