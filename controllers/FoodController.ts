@@ -11,6 +11,7 @@ import axios from "axios";
 import IUserService from "../services/User/IUserService";
 import validPayload from "../utils/PredictPayload";
 import checkMeal from "../middlewares/CheckMealMiddleware";
+import calculateDailyCalorieRequirement from "../utils/CalorieUser";
 
 class FoodController implements Controller {
   router: Router = Router();
@@ -31,7 +32,7 @@ class FoodController implements Controller {
     this.router.get(
       `${this.path}/predict`,
       authorizationMiddleware,
-      checkMeal,
+      wrapAsync(checkMeal),
       wrapAsync(this.predict.bind(this))
     );
     this.router.get(
@@ -88,7 +89,19 @@ class FoodController implements Controller {
 
     return response.json({
       status: "success",
-      Prediction: resultData,
+      data: {
+        Meal: result,
+        Calorie: parseInt(
+          calculateDailyCalorieRequirement(
+            result.weight,
+            result.height,
+            result.sex,
+            result.age,
+            result.daily_activity.toLowerCase(),
+            result.purpose
+          ) + ""
+        ),
+      },
       message: "Success do prediction",
     });
   }

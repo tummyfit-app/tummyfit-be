@@ -6,6 +6,7 @@ CREATE TABLE "User" (
     "firstname" TEXT NOT NULL,
     "lastname" TEXT,
     "email" TEXT NOT NULL,
+    "urlprofile" TEXT NOT NULL DEFAULT 'https://www.vhv.rs/dpng/d/41-419610_food-cartoon-png-transparent-png.png',
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
@@ -23,7 +24,7 @@ CREATE TABLE "UserDescription" (
     "dairy_free" TEXT NOT NULL,
     "vegan" TEXT NOT NULL,
     "vegetarian" TEXT NOT NULL,
-    "alcohol" TEXT NOT NULL,
+    "halal" TEXT NOT NULL,
     "daily_activity" TEXT NOT NULL,
     "age" INTEGER NOT NULL,
     "purpose" TEXT NOT NULL,
@@ -46,12 +47,26 @@ CREATE TABLE "Foods" (
     "dishType" TEXT NOT NULL,
     "halal" TEXT NOT NULL,
     "popular" TEXT NOT NULL,
-    "ready_minutes" TEXT NOT NULL,
-    "price" DECIMAL(65,30) NOT NULL,
+    "ready_minutes" INTEGER NOT NULL,
+    "price" INTEGER NOT NULL,
     "vegetarian" TEXT NOT NULL,
     "instructions" TEXT NOT NULL,
 
     CONSTRAINT "Foods_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "UserMealPlan" (
+    "id" TEXT NOT NULL,
+    "category" TEXT NOT NULL,
+    "image_url" TEXT NOT NULL,
+    "food_name" TEXT NOT NULL,
+    "day" TEXT NOT NULL,
+    "calories" DECIMAL(65,30) NOT NULL,
+    "userId" TEXT NOT NULL,
+    "date" TEXT NOT NULL,
+
+    CONSTRAINT "UserMealPlan_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateIndex
@@ -65,3 +80,6 @@ CREATE UNIQUE INDEX "UserDescription_userId_key" ON "UserDescription"("userId");
 
 -- AddForeignKey
 ALTER TABLE "UserDescription" ADD CONSTRAINT "UserDescription_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "UserMealPlan" ADD CONSTRAINT "UserMealPlan_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
