@@ -97,16 +97,6 @@ class FoodController implements Controller {
       status: "success",
       data: {
         Meal: resultData,
-        Calorie: parseInt(
-          calculateDailyCalorieRequirement(
-            result.weight,
-            result.height,
-            result.sex,
-            result.age,
-            result.daily_activity.toLowerCase(),
-            result.purpose
-          ) + ""
-        ),
       },
       message: "Success do prediction",
     });

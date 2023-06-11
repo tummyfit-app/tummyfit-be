@@ -35,12 +35,6 @@ class FoodService implements IFoodService {
       where: {
         day: day || undefined,
       },
-      select: {
-        category: true,
-        image_url: true,
-        food_name: true,
-        calories: true,
-      },
     });
   }
 

@@ -10,6 +10,7 @@ import AppError from "../utils/AppError";
 import UserEntity from "../entities/UserEntity";
 import wrapAsync from "../utils/CatchAsync";
 import moment from "moment";
+import calculateDailyCalorieRequirement from "../utils/CalorieUser";
 moment.locale("id");
 
 class UserController implements Controller {
@@ -88,6 +89,16 @@ class UserController implements Controller {
       status: "success",
       data: {
         UserDescription: result,
+        Calorie: parseInt(
+          calculateDailyCalorieRequirement(
+            result.weight,
+            result.height,
+            result.sex,
+            result.age,
+            result.daily_activity.toLowerCase(),
+            result.purpose
+          ) + ""
+        ),
       },
       message: "Getting Specific User Description",
     });

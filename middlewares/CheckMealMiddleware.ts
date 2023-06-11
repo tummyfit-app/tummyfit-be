@@ -42,16 +42,6 @@ async function checkMeal(req: Request, response: Response, next: NextFunction) {
         statusCode: "200",
         data: {
           Meal: result,
-          Calorie: parseInt(
-            calculateDailyCalorieRequirement(
-              userResult.weight,
-              userResult.height,
-              userResult.sex,
-              userResult.age,
-              userResult.daily_activity.toLowerCase(),
-              userResult.purpose
-            ) + ""
-          ),
         },
         message: "Success getting data",
       });

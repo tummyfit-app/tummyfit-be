@@ -33,7 +33,7 @@ function middlewareError(
   next: NextFunction
 ): void {
   const codeStatus = error.statusCode || "500";
-  console.log(error.stack);
+
   if (error.code === "P2002") {
     PrismaErrorUniqueValidation(error, res);
   } else if (error.code === "P2025") {
