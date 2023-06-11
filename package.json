@@ -4,7 +4,7 @@
   "description": "backend for tummyfit application",
   "main": "index.ts",
   "engines": {
-    "node": ">=14.17"
+    "node": "v16.13.2"
   },
   "scripts": {
     "start:dev": "ts-node ./seeders/seed.ts&&nodemon bin/www.ts",
