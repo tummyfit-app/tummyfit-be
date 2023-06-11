@@ -9,15 +9,14 @@ class FoodService implements IFoodService {
   constructor(prisma: PrismaClient) {
     this.prisma = prisma;
   }
-  async insertMealPlan(data: any, id: string): Promise<any> {
-    const total_data = data.length - 2;
+  async insertMealPlan(
+    data: any,
+    id: string,
+    day: string | undefined
+  ): Promise<any> {
+    const total_data = data.length - 1;
     for (let i = 0; i < total_data; i++) {
       for (let j = 0; j < 5; j++) {
-        // console.log(data[i].Day);
-        // console.log(data[i].Menu[j]["Recipe Title"]);
-        // console.log(data[i].Menu[j]["Category"]);
-        // console.log(data[i].Menu[j]["Calories"]);
-        // console.log(data[i].Menu[j]["Image"]);
         await this.prisma.userMealPlan.create({
           data: {
             day: data[i].Day,
@@ -26,12 +25,23 @@ class FoodService implements IFoodService {
             category: data[i].Menu[j]["Category"],
             calories: data[i].Menu[j]["Calories"],
             userId: id,
+            dateUpdatedUser: data.userUpdated,
             date: moment(new Date()).format("YYYY-MM-DD"),
           },
         });
       }
     }
-    return this.prisma.userMealPlan.findMany();
+    return this.prisma.userMealPlan.findMany({
+      where: {
+        day: day || undefined,
+      },
+      select: {
+        category: true,
+        image_url: true,
+        food_name: true,
+        calories: true,
+      },
+    });
   }
 
   selectId(idName: string): Promise<FoodEntity | null> {

@@ -65,6 +65,7 @@ CREATE TABLE "UserMealPlan" (
     "calories" DECIMAL(65,30) NOT NULL,
     "userId" TEXT NOT NULL,
     "date" TEXT NOT NULL,
+    "dateUpdatedUser" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "UserMealPlan_pkey" PRIMARY KEY ("id")
 );

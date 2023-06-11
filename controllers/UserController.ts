@@ -4,7 +4,6 @@ import IUserService from "../services/User/IUserService";
 import authorizationMiddleware, {
   CustomRequest,
 } from "../middlewares/AuthorizationMiddleware";
-
 import { descSchema, updateDescUserSchema } from "../utils/SchemaValidation";
 import { NextFunction } from "express";
 import AppError from "../utils/AppError";

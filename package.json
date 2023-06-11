@@ -3,6 +3,9 @@
   "version": "1.9.0",
   "description": "backend for tummyfit application",
   "main": "index.ts",
+  "engines": {
+    "node": ">=14.17"
+  },
   "scripts": {
     "start:dev": "ts-node ./seeders/seed.ts&&nodemon bin/www.ts",
     "start": "npx ts-node index.ts",

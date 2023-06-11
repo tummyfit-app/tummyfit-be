@@ -12,6 +12,7 @@ import IUserService from "../services/User/IUserService";
 import validPayload from "../utils/PredictPayload";
 import checkMeal from "../middlewares/CheckMealMiddleware";
 import calculateDailyCalorieRequirement from "../utils/CalorieUser";
+import prisma from "../config/DatabaseConnection";
 
 class FoodController implements Controller {
   router: Router = Router();
@@ -73,7 +74,7 @@ class FoodController implements Controller {
 
   async predict(req: Request, response: Response, next: NextFunction) {
     const user = (req as CustomRequest).user;
-
+    await prisma.foods.deleteMany();
     const result = await this.userService.findUser(user.id);
     if (!result) {
       return next(new AppError("Data not found", "404"));
@@ -84,13 +85,18 @@ class FoodController implements Controller {
       dataPayload
     );
     const { data } = predictionData;
-
-    const resultData = await this.foodService.insertMealPlan(data, user.id);
+    const { day }: any = req.query;
+    data.userUpdated = result.user.updatedAt;
+    const resultData = await this.foodService.insertMealPlan(
+      data,
+      user.id,
+      day
+    );
 
     return response.json({
       status: "success",
       data: {
-        Meal: result,
+        Meal: resultData,
         Calorie: parseInt(
           calculateDailyCalorieRequirement(
             result.weight,
