@@ -74,7 +74,7 @@ class FoodController implements Controller {
 
   async predict(req: Request, response: Response, next: NextFunction) {
     const user = (req as CustomRequest).user;
-    await prisma.foods.deleteMany();
+    await prisma.userMealPlan.deleteMany();
     const result = await this.userService.findUser(user.id);
     if (!result) {
       return next(new AppError("Data not found", "404"));

@@ -56,6 +56,7 @@ class FoodService implements IFoodService {
   async select(payload: any): Promise<FoodEntity[]> {
     const finalData = (await this.prisma.foods.count()) - 10;
     let random = 0;
+    console.log(finalData);
 
     if (Object.keys(payload).length <= 0) {
       random = Math.floor(Math.random() * (finalData - 1 + 1)) + 1;
