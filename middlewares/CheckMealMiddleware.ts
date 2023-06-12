@@ -3,7 +3,6 @@ import moment from "moment";
 moment.locale("id");
 import prisma from "../config/DatabaseConnection";
 import { CustomRequest } from "./AuthorizationMiddleware";
-import calculateDailyCalorieRequirement from "../utils/CalorieUser";
 
 async function checkMeal(req: Request, response: Response, next: NextFunction) {
   const user = (req as CustomRequest).user;
@@ -32,19 +31,16 @@ async function checkMeal(req: Request, response: Response, next: NextFunction) {
     },
   });
   if (result.length >= 1) {
-    if (
-      moment(new Date()).isoWeek() === moment(result[0].date).isoWeek() &&
-      moment(userResult.user.updatedAt).isoWeek() ===
-        moment(result[0].dateUpdatedUser).isoWeek()
-    )
-      return response.json({
-        status: "success",
-        statusCode: "200",
-        data: {
-          Meal: result,
-        },
-        message: "Success getting data",
-      });
+    if (moment(new Date()).isoWeek() === moment(result[0].date).isoWeek())
+      console.log("test");
+    return response.json({
+      status: "success",
+      statusCode: "200",
+      data: {
+        Meal: result,
+      },
+      message: "Success getting data",
+    });
   }
 
   next();

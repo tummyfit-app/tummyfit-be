@@ -11,7 +11,7 @@ import axios from "axios";
 import IUserService from "../services/User/IUserService";
 import validPayload from "../utils/PredictPayload";
 import checkMeal from "../middlewares/CheckMealMiddleware";
-import calculateDailyCalorieRequirement from "../utils/CalorieUser";
+
 import prisma from "../config/DatabaseConnection";
 
 class FoodController implements Controller {
@@ -26,7 +26,7 @@ class FoodController implements Controller {
 
   initialRouting() {
     this.router.get(
-      `${this.path}`,
+      `${this.path}/`,
       authorizationMiddleware,
       wrapAsync(this.select.bind(this))
     );
