@@ -9,7 +9,7 @@
   "scripts": {
     "start:dev": "ts-node ./seeders/seed.ts&&nodemon bin/www.ts",
     "start": "npx ts-node index.ts",
-    "init:prod": "npx prisma migrate deploy&&npx tsc",
+    "init:prod": "npm i&&npx prisma migrate deploy&&npx tsc",
     "start:prod": "node ./builds/seeders/seed.js&&node ./builds/bin/www.js",
     "test": "npx jest --runInBand  --no-cache"
   },
