@@ -25,7 +25,6 @@ class FoodService implements IFoodService {
             category: data[i].Menu[j]["Category"],
             calories: data[i].Menu[j]["Calories"],
             userId: id,
-
             date: moment(new Date()).format("YYYY-MM-DD"),
           },
         });
