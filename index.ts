@@ -20,3 +20,7 @@ export const app = new AppStarter(
   ],
   PORT
 );
+
+process.on("unhandledRejection", (reason, promise) => {
+  console.log("Failed");
+});
