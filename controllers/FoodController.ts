@@ -81,7 +81,7 @@ class FoodController implements Controller {
     }
     const dataPayload = validPayload(result);
     const predictionData = await axios.post(
-      "https://tummyfit-app-model-4t7swivhca-uc.a.run.app",
+      "https://tummyfit-prediction-production.up.railway.app/",
       dataPayload
     );
     const { data } = predictionData;
