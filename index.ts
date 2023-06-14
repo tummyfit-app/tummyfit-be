@@ -8,8 +8,6 @@ import UserService from "./services/User/UserService";
 import FoodController from "./controllers/FoodController";
 import FoodService from "./services/Foods/FoodServices";
 
-dotenv.config();
-
 const PORT: string = process.env.PORT || "3000";
 
 export const app = new AppStarter(

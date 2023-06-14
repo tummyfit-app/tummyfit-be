@@ -1,6 +1,5 @@
 import { PrismaClient } from "@prisma/client";
 
-import { FoodEntity } from "../../entities/FoodEntity";
 import { IFoodService } from "./IFoodService";
 import moment from "moment";
 
@@ -37,7 +36,7 @@ class FoodService implements IFoodService {
     });
   }
 
-  selectId(idName: string): Promise<FoodEntity | null> {
+  selectId(idName: string): Promise<any> {
     return this.prisma.foods.findFirst({
       where: {
         OR: [
@@ -52,7 +51,7 @@ class FoodService implements IFoodService {
     });
   }
 
-  async select(payload: any): Promise<FoodEntity[]> {
+  async select(payload: any): Promise<any> {
     const finalData = (await this.prisma.foods.count()) - 10;
     let random = 0;
     console.log(finalData);

@@ -1,12 +1,10 @@
-import { Prisma } from "@prisma/client";
-
 export interface FoodEntity {
   name: string;
-  calories: Prisma.Decimal;
-  fat: Prisma.Decimal;
-  protein: Prisma.Decimal;
-  carbo: Prisma.Decimal;
-  alcohol: Prisma.Decimal;
+  calories: number;
+  fat: number;
+  protein: number;
+  carbo: number;
+  alcohol: number;
   image: string;
   ingredients: string[];
   dishType: string;

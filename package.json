@@ -9,8 +9,8 @@
   "scripts": {
     "start:dev": "ts-node ./seeders/seed.ts&&nodemon bin/www.ts",
     "start": "npx ts-node index.ts",
-    "init:prod": "npm i&&npx prisma migrate deploy&&npx tsc",
-    "start:prod": "node ./builds/bin/www.js",
+    "init:prod": "npm i&&npx prisma generate&&npx prisma migrate deploy",
+    "start:prod": "npm run init:prod&&npx tsc&&node ./builds/bin/www.js",
     "test": "npx jest --runInBand  --no-cache"
   },
   "author": "tummyfit",

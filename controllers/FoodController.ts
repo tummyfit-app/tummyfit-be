@@ -6,7 +6,7 @@ import authorizationMiddleware, {
   CustomRequest,
 } from "../middlewares/AuthorizationMiddleware";
 import AppError from "../utils/AppError";
-import { FoodEntity } from "../entities/FoodEntity";
+
 import axios from "axios";
 import IUserService from "../services/User/IUserService";
 import validPayload from "../utils/PredictPayload";
@@ -44,9 +44,7 @@ class FoodController implements Controller {
   }
 
   async selectId(req: Request, response: Response, next: NextFunction) {
-    const result: FoodEntity | null = await this.foodService.selectId(
-      req.params.id
-    );
+    const result: any = await this.foodService.selectId(req.params.id);
 
     if (!result) {
       return next(new AppError("No Data Found", "404"));
