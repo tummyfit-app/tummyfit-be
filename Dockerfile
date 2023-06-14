@@ -2,11 +2,11 @@ FROM node:16.13.2
 
 WORKDIR /app
 
-COPY package*.json .
+COPY package*.json ./
 
 RUN npm install 
 
-COPY . .
+COPY . ./
 
 RUN npm run init:prod
 
