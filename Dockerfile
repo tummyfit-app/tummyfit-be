@@ -9,7 +9,6 @@ RUN npm install
 
 COPY . ./
 
-RUN npx tsc
 
 RUN npm run init:prod
 
