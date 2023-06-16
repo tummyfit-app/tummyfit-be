@@ -18,4 +18,8 @@ This repository contains the source code for the Tummyfit Application's API Serv
 
 - The application is now ready to be used.
 
+
+## For the Documentation API, please check endpoint: 
+/api-docs
+
 Thank you.
