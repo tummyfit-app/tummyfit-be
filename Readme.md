@@ -1,6 +1,6 @@
 ## TummyFit API Server Using Express
 
-This repository contains the source code for the Tummyfit Application's API Server using the ExpressJS programming language.
+This repository contains the source code for the Tummyfit Application's API Server using the ExpressJS framework & Typescript programming language.
 
 ## To use it, follow these steps:
 
