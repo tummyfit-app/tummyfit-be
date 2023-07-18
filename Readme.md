@@ -19,6 +19,9 @@ This repository contains the source code for the Tummyfit Application's API Serv
 - The application is now ready to be used.
 
 
+## Tech Stack 
+Cloud Run, Google Cloud Storage, Cloud SQL(Postgres), ExpressJS, Typescript, PrismaORM
+
 ## For the Documentation API, please check endpoint: 
 /api-docs
 
